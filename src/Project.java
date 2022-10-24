@@ -11,17 +11,17 @@ public class Project extends Component{
     //region -------------CONSTRUCTORES-------------
     public Project(String name, Project father, LocalDateTime start, LocalDateTime end, ArrayList<String> tags) {
         super(name, start, end, tags);
-        father.addProject(this);
+        father.addComponent(this);
     }
 
     public Project(String name, Project father, ArrayList<String> tags) {
         super(name, father, tags);
-        father.addProject(this);
+        father.addComponent(this);
     }
 
     public Project(String name, Project father) {
         super(name, father);
-        father.addProject(this);
+        father.addComponent(this);
     }
 
     public Project(String name, ArrayList<String> tags) {
@@ -38,14 +38,18 @@ public class Project extends Component{
     //endregion
 
     //region -------------MÉTODOS-------------
-    public void addProject(Project p){
-        this.compList.add(p);
-    }
-    public void addTask(Task t){
-        this.compList.add(t);
+    public void addComponent(Component c){
+        this.compList.add(c);
     }
     //endregion
 
+    @Override
+    public void accept(Visitor v){
+        for (Component element: this.compList){
+            element.accept(v);
+        }
+        v.visitProject(this);
+    }
 
     @Override
     public String toString() {

@@ -49,4 +49,11 @@ public abstract class Component {
 
     public ArrayList<String> getTagList(){ return tagList; }
     //endregion
+
+    public void update(){
+     //void
+    }
+    public void accept(Visitor v){
+        //void
+    }
 }

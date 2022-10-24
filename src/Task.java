@@ -13,12 +13,12 @@ public class Task extends Component{
 
     public Task(String compName, Project father, ArrayList<String> tagList) {
         super(compName, father, tagList);
-        father.addTask(this);
+        father.addComponent(this);
     }
 
     public Task(String compName, Project father) {
         super(compName, father);
-        father.addTask(this);
+        father.addComponent(this);
     }
 
     public Task(String name, ArrayList<String> tags) {
