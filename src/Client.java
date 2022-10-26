@@ -2,11 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Client {
-    public static void main(String[] args) {
-        simpleTest();
-    }
-
-    private static void simpleTest(){
+    private static void testA(){
         Project rootProject = new Project("root");
         Project softwareDesignProject = new Project("Software Design", rootProject, new ArrayList<String>(Arrays.asList("java", "flutter")));
         Project softwareTestingProject = new Project("Software Testing", rootProject, new ArrayList<String>(Arrays.asList("c++", "Java", "python")));
@@ -23,5 +19,22 @@ public class Client {
         Task firstMilestoneTask = new Task("First Milestone", timeTrackerProject, new ArrayList<String>(Arrays.asList("Java", "IntelliJ")));
 
         System.out.println(rootProject.toString());
+    }
+
+    private static void testB(){
+
+    }
+    public static void saveData(){
+
+    }
+    public static void loadData(){
+
+    }
+
+    public static void main(String[] args) {
+        testA();
+        //testB();
+        //saveData();
+        //loadData();
     }
 }

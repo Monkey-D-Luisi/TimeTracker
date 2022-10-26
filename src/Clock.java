@@ -14,6 +14,7 @@ public class Clock extends Observable {
         start();
     }
 
+    //region -------------GETS-------------
     public LocalDateTime getDate() {
         return date;
     }
@@ -21,7 +22,9 @@ public class Clock extends Observable {
     public static Clock getInstance(){
         return clockTimer;
     }
+    //endregion
 
+    //region -------------MÉTODOS-------------
     public void start(){
         TimerTask taskToRepeat = new TimerTask() {
             @Override
@@ -34,4 +37,5 @@ public class Clock extends Observable {
         timer.scheduleAtFixedRate(taskToRepeat, 0, 1000*periodo);
     }
     public void stop(){ timer.cancel(); }
+    //endregion
 }

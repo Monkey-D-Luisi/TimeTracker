@@ -3,9 +3,12 @@
 class Interval{
 - initialTime : LocalDateTime
 - endTime : LocalDateTime
+- timeFormatter : DateTimeFormatter
 - owner : Task
 - time : Duration
 + Interval(owner : Task, begin : LocalDateTime , end : LocalDateTime, duration : Duration)
++ print()
++ stopTicking()
 + update(o : Observable ,arg : Object)
 }
 
@@ -14,6 +17,13 @@ class Client{
 + {static} simpleTest()
 }
 class Clock extends Observable{
+- date : LocalDateTime
+- timer : Timer
+- clockTimer : Clock
+- periodo : int
+- Clock()
++ start()
++ stop()
 }
 
 class ElementVisitor implements Visitor{
@@ -61,8 +71,12 @@ interface Visitor{
 + visitTask(t Task)
 }
 
+class Observer{
++ update(o : Observable, arg : Object)
+}
+
 Project *-right-> "0..*" Component
-Interval --right--> "1" Task
+Interval --right--> "*..1" Task
 Observable --down> Observer
 Interval ..up|> Observer
 Client --> Component
