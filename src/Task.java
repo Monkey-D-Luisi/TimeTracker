@@ -37,4 +37,9 @@ public class Task extends Component{
                 "\n tagList=" + tagList + ','+
                 "\n } \n";
     }
+
+    @Override
+    public String getType() {
+        return "Task";
+    }
 }

@@ -69,4 +69,9 @@ public class Project extends Component{
                     "\n } \n";
         }
     }
+
+    @Override
+    public String getType() {
+        return "Project";
+    }
 }

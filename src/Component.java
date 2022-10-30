@@ -9,6 +9,8 @@ public abstract class Component {
     protected LocalDateTime startDate = null;
     protected LocalDateTime endDate = null;
     protected ArrayList<String> tagList = new ArrayList<>();
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private Duration time = Duration.ZERO;
     //endregion
 
     //region -------------CONSTRUCTORES-------------
@@ -51,9 +53,22 @@ public abstract class Component {
     //endregion
 
     public void update(){
-     //void
+        this.time = time.plusSeconds(Clock.getPeriodo());
+        this.endDate = (LocalDateTime)arg;
+        if(this.father != null)
+            this.father.update();
+        printer();
     }
     public void accept(Visitor v){
         //void
+    }
+
+    public void printer(){
+        System.out.format("%-16s %-19s %-25s %-25s %-10s \n", this.getType(), compName,
+            startDate.format(timeFormatter), endDate.format(timeFormatter), time.getSeconds());
+    }
+
+    public String getType() {
+        return "Component";
     }
 }
