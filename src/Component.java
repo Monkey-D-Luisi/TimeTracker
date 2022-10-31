@@ -1,6 +1,7 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 
 public abstract class Component {
     //region -------------ATRIBUTOS-------------
@@ -52,11 +53,11 @@ public abstract class Component {
     public ArrayList<String> getTagList(){ return tagList; }
     //endregion
 
-    public void update(){
-        this.time = time.plusSeconds(Clock.getPeriodo());
-        this.endDate = (LocalDateTime)arg;
+    public void update(Duration duration, LocalDateTime endTime){
+        this.time = time.plus(duration);
+        this.endDate = endTime;
         if(this.father != null)
-            this.father.update();
+            this.father.update(this.time, this.endDate);
         printer();
     }
     public void accept(Visitor v){

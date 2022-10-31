@@ -41,7 +41,7 @@ public class Interval implements Observer {
     public void update(Observable o, Object arg) {
         this.time = time.plusSeconds(Clock.getPeriodo());
         this.endTime = (LocalDateTime)arg;
-        this.owner.update();
+        this.owner.update(this.time, this.endTime);
         printer();
     }
 }
