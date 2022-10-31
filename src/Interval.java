@@ -20,18 +20,35 @@ public class Interval implements Observer {
         this.endTime = end;
         this.time = duration;
     }
+
+    public Interval(LocalDateTime begin,LocalDateTime end, Duration duration){
+        this.initialTime = begin;
+        this.endTime = end;
+        this.time = duration;
+    }
+
+    public Interval(LocalDateTime begin, Task owner){
+        this.owner = owner;
+        this.initialTime = begin;
+        this.time = Duration.ZERO;
+    }
+
+    public Interval(Task owner){
+        this.owner = owner;
+        this.initialTime = LocalDateTime.now();
+        this.time = Duration.ZERO;
+    }
     //endregion
 
     //region -------------GETS-------------
     public LocalDateTime getInitialTime() { return initialTime; }
     public LocalDateTime getEndTime() { return endTime; }
     public Task getOwner() { return owner; }
+    public void setOwner(Task t){
+        this.owner = t;
+    }
     public Duration getTime() { return time; }
     //endregion
-
-    public void stopTicking(){
-        Clock.getInstance().deleteObserver(this);
-    }
 
     public void printer(){
         System.out.format("%-16s %-19s %-25s %-25s %-10s \n", "Interval:", "",
@@ -41,7 +58,8 @@ public class Interval implements Observer {
     public void update(Observable o, Object arg) {
         this.time = time.plusSeconds(Clock.getPeriodo());
         this.endTime = (LocalDateTime)arg;
-        this.owner.update(this.time, this.endTime);
+        this.owner.update(this.endTime);
         printer();
+        this.owner.printer();
     }
 }

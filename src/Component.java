@@ -22,6 +22,13 @@ public abstract class Component {
         this.tagList = tags;
     }
 
+    public Component (String name, LocalDateTime start, LocalDateTime end, Duration d){
+        this.compName = name;
+        this.startDate = start;
+        this.endDate = end;
+        this.time = d;
+    }
+
     public Component(String compName, Project father, ArrayList<String> tagList) {
         this.compName = compName;
         this.father = father;
@@ -44,32 +51,56 @@ public abstract class Component {
 
     //region -------------GET Y SET-------------
     public String getCompName(){ return this.compName; }
+    public Project getFather() { return this.father; }
 
     public LocalDateTime getStartDate(){ return startDate; }
     public void setStartDate(LocalDateTime startDate){ this.startDate = startDate; }
+
     public LocalDateTime getEndDate(){ return endDate; }
     public void setEndDate(LocalDateTime endDate){ this.endDate = endDate; }
 
+    public Duration getTime(){ return this.time; }
+
     public ArrayList<String> getTagList(){ return tagList; }
     //endregion
-
-    public void update(Duration duration, LocalDateTime endTime){
-        this.time = time.plus(duration);
-        this.endDate = endTime;
-        if(this.father != null)
-            this.father.update(this.time, this.endDate);
-        printer();
+    public void updateStartDate(LocalDateTime date){
+        if(this.getFather() != null){
+            if(this.getFather().getStartDate() == null){
+                this.getFather().setStartDate(date);
+                this.getFather().updateStartDate(date);
+            }
+        }
     }
-    public void accept(Visitor v){
-        //void
+
+    public void updateEndDate(LocalDateTime date){
+        if(this.getFather() != null){
+            if(this.getFather().getEndDate() == null){
+                this.getFather().setEndDate(date);
+                this.getFather().updateEndDate(date);
+            }
+        }
+    }
+
+    public void update(LocalDateTime endTime){
+        this.endDate = endTime;
+        this.time = this.time.plusSeconds(Clock.getPeriodo());
+        if(this.getFather() != null) {
+            this.getFather().setStartDate(this.startDate);
+            this.getFather().updateStartDate(this.startDate);
+            this.getFather().update(this.endDate);
+        }
     }
 
     public void printer(){
-        System.out.format("%-16s %-19s %-25s %-25s %-10s \n", this.getType(), compName,
-            startDate.format(timeFormatter), endDate.format(timeFormatter), time.getSeconds());
+        System.out.format("%-16s %-19s %-25s %-25s %-10s \n", "activity:", this.getCompName(),
+                this.getStartDate().format(timeFormatter), this.getEndDate().format(timeFormatter), this.getTime().getSeconds());
+        if (this.getFather() != null){
+            this.getFather().printer();
+        }
     }
 
     public String getType() {
         return "Component";
     }
+    public abstract void accept(Visitor v);
 }

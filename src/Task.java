@@ -29,6 +29,40 @@ public class Task extends Component{
     }
     //endregion
 
+    public ArrayList<Interval> getIntervalList() {
+        return intervalList;
+    }
+
+    public void addInterval(Interval i){
+        intervalList.add(i);
+    }
+
+
+    public void start(){
+        Interval currInterval = new Interval(LocalDateTime.now(), this);
+        intervalList.add(currInterval);
+        Clock.getInstance().addObserver(currInterval);
+
+        if(this.getStartDate() == null ){
+            this.setStartDate(LocalDateTime.now());
+            //this.setEndDate(LocalDateTime.now());
+        }
+        if(this.getFather().getStartDate() == null){
+            this.getFather().setStartDate(LocalDateTime.now());
+        }
+        this.updateStartDate(LocalDateTime.now());
+
+
+    }
+
+    public void stop(){
+        Interval interval = intervalList.get(intervalList.size() - 1);
+        this.updateEndDate(LocalDateTime.now());
+        this.setEndDate(LocalDateTime.now());
+        Clock.getInstance().deleteObserver(interval);;
+    }
+
+
     @Override
     public String toString() {
         return "Task{" +
@@ -41,5 +75,9 @@ public class Task extends Component{
     @Override
     public String getType() {
         return "Task";
+    }
+    @Override
+    public void accept(Visitor v){
+        v.visitTask(this);
     }
 }

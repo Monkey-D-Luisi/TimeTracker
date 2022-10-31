@@ -26,6 +26,7 @@ public class Clock extends Observable {
 
     //region -------------MÉTODOS-------------
     public void start(){
+        timer = new Timer();
         TimerTask taskToRepeat = new TimerTask() {
             @Override
             public void run() {
