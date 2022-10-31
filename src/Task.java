@@ -43,23 +43,18 @@ public class Task extends Component{
         intervalList.add(currInterval);
         Clock.getInstance().addObserver(currInterval);
 
-        if(this.getStartDate() == null ){
+        if(this.startDate == null ){
             this.setStartDate(LocalDateTime.now());
-            //this.setEndDate(LocalDateTime.now());
         }
-        if(this.getFather().getStartDate() == null){
-            this.getFather().setStartDate(LocalDateTime.now());
-        }
-        this.updateStartDate(LocalDateTime.now());
-
-
     }
 
     public void stop(){
         Interval interval = intervalList.get(intervalList.size() - 1);
-        this.updateEndDate(LocalDateTime.now());
+
+        //si ponemos esta línea, la hora de fin no va a coincidir con la duración
         this.setEndDate(LocalDateTime.now());
-        Clock.getInstance().deleteObserver(interval);;
+
+        Clock.getInstance().deleteObserver(interval);
     }
 
 

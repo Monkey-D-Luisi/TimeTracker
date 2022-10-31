@@ -56,10 +56,9 @@ public class Interval implements Observer {
     }
     @Override
     public void update(Observable o, Object arg) {
-        this.time = time.plusSeconds(Clock.getPeriodo());
+        this.time = time.plusSeconds(Clock.getPeriod());
         this.endTime = (LocalDateTime)arg;
-        this.owner.update(this.endTime);
         printer();
-        this.owner.printer();
+        this.owner.update(this.endTime);
     }
 }

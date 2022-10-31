@@ -51,52 +51,38 @@ public abstract class Component {
 
     //region -------------GET Y SET-------------
     public String getCompName(){ return this.compName; }
-    public Project getFather() { return this.father; }
 
     public LocalDateTime getStartDate(){ return startDate; }
-    public void setStartDate(LocalDateTime startDate){ this.startDate = startDate; }
+    public void setStartDate(LocalDateTime startDate){
+        this.startDate = startDate;
+        if(this.father != null && this.father.getStartDate() == null)
+            this.father.setStartDate(startDate);
+    }
 
     public LocalDateTime getEndDate(){ return endDate; }
-    public void setEndDate(LocalDateTime endDate){ this.endDate = endDate; }
+    public void setEndDate(LocalDateTime endDate){
+        this.endDate = startDate;
+        if(this.father != null)
+            this.father.setEndDate(endDate);
+    }
 
     public Duration getTime(){ return this.time; }
 
     public ArrayList<String> getTagList(){ return tagList; }
     //endregion
-    public void updateStartDate(LocalDateTime date){
-        if(this.getFather() != null){
-            if(this.getFather().getStartDate() == null){
-                this.getFather().setStartDate(date);
-                this.getFather().updateStartDate(date);
-            }
-        }
-    }
-
-    public void updateEndDate(LocalDateTime date){
-        if(this.getFather() != null){
-            if(this.getFather().getEndDate() == null){
-                this.getFather().setEndDate(date);
-                this.getFather().updateEndDate(date);
-            }
-        }
-    }
 
     public void update(LocalDateTime endTime){
         this.endDate = endTime;
-        this.time = this.time.plusSeconds(Clock.getPeriodo());
-        if(this.getFather() != null) {
-            this.getFather().setStartDate(this.startDate);
-            this.getFather().updateStartDate(this.startDate);
-            this.getFather().update(this.endDate);
+        this.time = this.time.plusSeconds(Clock.getPeriod());
+        printer();
+        if(this.father != null) {
+            this.father.update(this.endDate);
         }
     }
 
     public void printer(){
         System.out.format("%-16s %-19s %-25s %-25s %-10s \n", "activity:", this.getCompName(),
-                this.getStartDate().format(timeFormatter), this.getEndDate().format(timeFormatter), this.getTime().getSeconds());
-        if (this.getFather() != null){
-            this.getFather().printer();
-        }
+                this.startDate.format(timeFormatter), this.endDate.format(timeFormatter), this.time.getSeconds());
     }
 
     public String getType() {

@@ -7,7 +7,7 @@ public class Clock extends Observable {
     private LocalDateTime date;
     private Timer timer;
     private static final Clock clockTimer = new Clock();
-    private static final int periodo = 2;
+    private static final int period = 2;
 
     private Clock(){
         timer = new Timer();
@@ -18,7 +18,7 @@ public class Clock extends Observable {
     public LocalDateTime getDate() {
         return date;
     }
-    public static int getPeriodo(){ return periodo; }
+    public static int getPeriod(){ return period; }
     public static Clock getInstance(){
         return clockTimer;
     }
@@ -35,7 +35,7 @@ public class Clock extends Observable {
                 notifyObservers(date);
             }
         };
-        timer.scheduleAtFixedRate(taskToRepeat, 0, 1000*periodo);
+        timer.scheduleAtFixedRate(taskToRepeat, 0, 1000* period);
     }
     public void stop(){ timer.cancel(); }
     //endregion
