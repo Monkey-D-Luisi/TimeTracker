@@ -194,7 +194,6 @@ public class ElementVisitor implements Visitor{
         return gsonObj.isNull(key) ? new JSONArray() : gsonObj.getJSONArray(key);
     }
 
-    /*Añadimos los Strings a un ArrayList*/
     private ArrayList<String> getTags(JSONObject gsonObj, String key) {
         ArrayList<String> tags = new ArrayList<>();
         if (gsonObj.isNull(key)) {
