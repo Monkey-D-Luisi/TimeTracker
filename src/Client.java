@@ -1,11 +1,16 @@
-import java.io.InputStream;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Client {
+    public static void main(String[] args) throws InterruptedException{
+        //testA();
+        //testB();
+        loadData("fita1.json");
+        System.exit(0);
+    }
+
     private static void testA(){
         Project rootProject = new Project("root");
         Project softwareDesignProject = new Project("Software Design", rootProject, new ArrayList<String>(Arrays.asList("java", "flutter")));
@@ -26,7 +31,6 @@ public class Client {
     }
 
     private static void testB() throws InterruptedException{
-        Visitor v = new ElementVisitor();
         Clock OurTimer = Clock.getInstance();
 
         Project rootProject = new Project("root");
@@ -44,7 +48,6 @@ public class Client {
         Task readHandoutTask = new Task("read handout", timeTrackerProject);
         Task firstMilestoneTask = new Task("first milestone", timeTrackerProject, new ArrayList<String>(Arrays.asList("Java", "IntelliJ")));
 
-        //Thread.sleep(1500);
         System.out.format("%-16s %-19s %-25s %-25s %-10s \n", "", "", "initial date", "final date", "duration");
         System.out.println("start test");
 
@@ -82,22 +85,29 @@ public class Client {
 
         System.out.println("end of tests");
 
-        rootProject.accept(v);
-
-
-    }
-    public static void saveData(){
-
-    }
-    public static void loadData(){
-
+        saveData(rootProject);
     }
 
-    public static void main(String[] args) throws InterruptedException{
-        //testA();
-        testB();
-        //saveData();
-        //loadData();
-        System.exit(0);
+    private static void saveData(Project root){
+        ElementVisitor v = new ElementVisitor();
+        root.accept(v);
+        try {
+            v.save("fita1.json");
+            v.print();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void loadData(String filename){
+        ElementVisitor v = new ElementVisitor();
+        Project root = null;
+        try {
+            root = v.load("./datos/" + filename);
+            root.accept(v);
+            v.print();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

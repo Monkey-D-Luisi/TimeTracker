@@ -15,9 +15,6 @@ public class Clock extends Observable {
     }
 
     //region -------------GETS-------------
-    public LocalDateTime getDate() {
-        return date;
-    }
     public static int getPeriodo(){ return periodo; }
     public static Clock getInstance(){
         return clockTimer;

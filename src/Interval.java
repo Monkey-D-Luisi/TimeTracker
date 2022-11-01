@@ -30,13 +30,11 @@ public class Interval implements Observer {
     public Interval(LocalDateTime begin, Task owner){
         this.owner = owner;
         this.initialTime = begin;
-        this.time = Duration.ZERO;
     }
 
     public Interval(Task owner){
         this.owner = owner;
         this.initialTime = LocalDateTime.now();
-        this.time = Duration.ZERO;
     }
     //endregion
 
@@ -50,16 +48,17 @@ public class Interval implements Observer {
     public Duration getTime() { return time; }
     //endregion
 
-    public void printer(){
+    //region -------------MÉTODOS-------------
+    private void printer(){
         System.out.format("%-16s %-19s %-25s %-25s %-10s \n", "Interval:", "",
                 initialTime.format(timeFormatter), endTime.format(timeFormatter), time.getSeconds());
     }
     @Override
     public void update(Observable o, Object arg) {
-        this.time = time.plusSeconds(Clock.getPeriodo());
+        this.time = this.time.plusSeconds(Clock.getPeriodo());
         this.endTime = (LocalDateTime)arg;
-        this.owner.update(this.endTime);
         printer();
-        this.owner.printer();
+        this.owner.update(this.endTime);
     }
+    //endregion
 }

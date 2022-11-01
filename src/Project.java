@@ -1,6 +1,6 @@
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class Project extends Component{
 
@@ -9,9 +9,13 @@ public class Project extends Component{
     //endregion
 
     //region -------------CONSTRUCTORES-------------
-    public Project(String name, Project father, LocalDateTime start, LocalDateTime end, ArrayList<String> tags) {
-        super(name, start, end, tags);
+    public Project(String name, Project father, LocalDateTime start, LocalDateTime end, ArrayList<String> tags, Duration time) {
+        super(name, father, start, end, tags, time);
         father.addComponent(this);
+    }
+
+    public Project(String name, LocalDateTime start, LocalDateTime end, ArrayList<String> tags, Duration time) {
+        super(name, start, end, tags, time);
     }
 
     public Project(String name, Project father, ArrayList<String> tags) {
@@ -24,16 +28,13 @@ public class Project extends Component{
         father.addComponent(this);
     }
 
-    public Project(String name, ArrayList<String> tags) {
-        super(name, tags);
-    }
     public Project(String name) {
         super(name);
     }
+
     //endregion
 
     //region -------------GETs Y SETs-------------
-    public ArrayList<Component> getCompList(){ return compList; }
     public void setCompList(ArrayList<Component> compList){ this.compList = compList; }
     //endregion
 
@@ -41,7 +42,6 @@ public class Project extends Component{
     public void addComponent(Component c){
         this.compList.add(c);
     }
-    //endregion
 
     @Override
     public void accept(Visitor v){
@@ -69,9 +69,6 @@ public class Project extends Component{
                     "\n } \n";
         }
     }
+    //endregion
 
-    @Override
-    public String getType() {
-        return "Project";
-    }
 }
