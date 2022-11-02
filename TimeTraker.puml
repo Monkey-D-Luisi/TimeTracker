@@ -7,14 +7,18 @@ class Interval{
 - owner : Task
 - time : Duration
 + Interval(owner : Task, begin : LocalDateTime , end : LocalDateTime, duration : Duration)
-+ print()
++ Interval(begin: LocalDateTime, owner : Task)
++ printer()
 + stopTicking()
 + update(o : Observable ,arg : Object)
 }
 
 class Client{
 + {static} main(String[] args)
-+ {static} simpleTest()
+- {static} testA()
+- {static} testB()
+- {static} saveData(root : Project)
+- {static} loadData(filename : String)
 }
 class Clock extends Observable{
 - date : LocalDateTime
@@ -27,8 +31,17 @@ class Clock extends Observable{
 }
 
 class ElementVisitor implements Visitor{
+- proyectoActual : JSONObject
+- proyectoAnterior : JSONObject
+- proyectos: JSONArray
+- tareas : JSONArray
 + visitProject(p : Project)
 + visitTask(t : Task)
+- createComponent(c : Component) : JSONObject
+- createTree(jsonObject : JSONObject, father : Project) : Component
++ save(fileName : String)
++ load(fileName : String) : Project
++ print()
 }
 
 abstract class Component{
@@ -37,38 +50,46 @@ abstract class Component{
 - startDate : LocalDateTime
 - endDate : LocalDateTime
 - tagList : ArrayList<String>
+- time : Duration
 + Component (name : String, start : LocalDateTime, LocalDateTime : LocalDateTime, tags : ArrayList<String>)
 + Component(compName : String, father : Project , tagList : ArrayList<String>)
 + Component (compName : String, father : Project )
 + Component (name : String, tags : ArrayList<String>)
 + Component (name : String)
++ update(endTime : LocalDateTime)
++ accept(v : Visitor)
++ printer()
 }
 
 class Project extends Component{
-+ compList : ArrayList<Component>
+- compList : ArrayList<Component>
 + Project (name : String, start : LocalDateTime, LocalDateTime : LocalDateTime, tags : ArrayList<String>)
 + Project(compName : String, father : Project , tagList : ArrayList<String>)
 + Project (compName : String, father : Project )
 + Project (name : String, tags : ArrayList<String>)
 + Project (name : String)
-+ addProject(p : Project)
-+ addTask(t : Task)
++ setCompList(compList : ArrayList<Component>)
++ addComponent(c : Component)
++ accept(v : Visitor)
 + toString() : String
 }
 
 class Task extends Component{
 - intervalList : ArrayList<Interval>
-+ Task (name : String, start : LocalDateTime, LocalDateTime : LocalDateTime, tags : ArrayList<String>)
++ Task(name : String, father : Project,start : LocalDateTime, end : LocalDateTime, tags : ArrayList<String>, time : Duration)
 + Task (compName : String, father : Project , tagList : ArrayList<String>)
-+ Task (compName : String, father : Project )
 + Task (name : String, tags : ArrayList<String>)
-+ Task (name : String)
++ start()
++ stop()
++ accept(v : Visitor)
 + toString() : String
 }
 
 interface Visitor{
 + visitProject(p Project)
 + visitTask(t Task)
++ save(s : String)
++ load(name: String) : Project
 }
 
 class Observer{
