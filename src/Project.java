@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -36,6 +37,9 @@ public class Project extends Component{
 
     //region -------------GETs Y SETs-------------
     public void setCompList(ArrayList<Component> compList){ this.compList = compList; }
+    public ArrayList<Component> getCompList() {
+        return this.compList;
+    }
     //endregion
 
     //region -------------MÉTODOS-------------

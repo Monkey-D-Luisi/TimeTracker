@@ -5,9 +5,9 @@ import java.util.Arrays;
 
 public class Client {
     public static void main(String[] args) throws InterruptedException{
-        //testA();
+        testA();
         //testB();
-        loadData("fita1.json");
+        //loadData("fita1.json");
         System.exit(0);
     }
 
@@ -21,13 +21,23 @@ public class Client {
         Project problemProject = new Project("Problems", softwareDesignProject);
         Project timeTrackerProject = new Project("Time Tracker", softwareDesignProject);
 
-        Task firsListTask = new Task("First List", problemProject);
+        Task firsListTask = new Task("First List", problemProject, new ArrayList<String>(Arrays.asList("java")));
         Task secondListTask = new Task("Second List", problemProject, new ArrayList<String>(Arrays.asList("Dart")));
 
         Task readHandoutTask = new Task("Read Handout", timeTrackerProject);
         Task firstMilestoneTask = new Task("First Milestone", timeTrackerProject, new ArrayList<String>(Arrays.asList("Java", "IntelliJ")));
 
-        System.out.println(rootProject.toString());
+        //System.out.println(rootProject.toString());
+
+        ArrayList<Component> searchedTags = new ArrayList<>();
+        Visitor v = new ElementVisitor();
+        rootProject.accept(v);
+        String tagToSearch = "C++";
+        searchedTags = v.searchByTag(rootProject, tagToSearch);
+
+        for (Component item : searchedTags){
+            System.out.println(item.getCompName());
+        }
     }
 
     private static void testB() throws InterruptedException{

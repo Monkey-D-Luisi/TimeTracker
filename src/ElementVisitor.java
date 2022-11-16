@@ -217,5 +217,38 @@ public class ElementVisitor implements Visitor{
         }
         return duration;
     }
+
+    @Override
+    public ArrayList<Component> searchByTag(Project p, String tag){
+        ArrayList<Component> componentList = new ArrayList<>();
+
+        for(String tagItem : p.getTagList()){
+            if(tag.equalsIgnoreCase(tagItem)){
+                componentList.add(p);
+            }
+        }
+
+        for(Component compItem : p.getCompList()){
+            if(compItem instanceof Task){
+                componentList.addAll(searchByTag((Task) compItem, tag));
+            }
+            else{
+                componentList.addAll(searchByTag((Project) compItem, tag));
+            }
+        }
+        return componentList;
+    }
+
+    @Override
+    public ArrayList<Component> searchByTag(Task t, String tag){
+        ArrayList<Component> component = new ArrayList<>();
+
+        for(String tagItem : t.getTagList()){
+            if(tag.equalsIgnoreCase(tagItem)){
+                component.add(t);
+            }
+        }
+        return component;
+    }
     //endregion
 }
