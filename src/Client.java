@@ -5,9 +5,9 @@ import java.util.Arrays;
 
 public class Client {
     public static void main(String[] args) throws InterruptedException{
-        //testA();
+        testA();
         //testB();
-        loadData("fita1.json");
+        //loadData("fita1.json");
         System.exit(0);
     }
 
@@ -27,7 +27,15 @@ public class Client {
         Task readHandoutTask = new Task("Read Handout", timeTrackerProject);
         Task firstMilestoneTask = new Task("First Milestone", timeTrackerProject, new ArrayList<String>(Arrays.asList("Java", "IntelliJ")));
 
-        System.out.println(rootProject.toString());
+        //System.out.println(rootProject.toString());
+
+        ArrayList<Component> searchedTags = new ArrayList<>();
+        Visitor v = new ElementVisitor();
+        rootProject.accept(v);
+        String tagToSearch = "java";
+        searchedTags = v.searchByTag(rootProject, tagToSearch);
+
+        System.out.println(searchedTags);
     }
 
     private static void testB() throws InterruptedException{

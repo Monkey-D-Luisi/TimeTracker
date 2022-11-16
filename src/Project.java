@@ -36,6 +36,11 @@ public class Project extends Component{
 
     //region -------------GETs Y SETs-------------
     public void setCompList(ArrayList<Component> compList){ this.compList = compList; }
+
+    public ArrayList<Component> getCompList() {
+        return compList;
+    }
+
     //endregion
 
     //region -------------MÉTODOS-------------

@@ -17,6 +17,14 @@ public class ElementVisitor implements Visitor{
     //endregion
 
     //region -------------MÉTODOS-------------
+    /*
+    -   Llamamos al método createComponent(p) para inicializar el proyecto actual como JSONObject
+    -   Comprobamos que haya tareas asociadas al proyecto y en caso afirmativo las añadimos al JSON
+    -   Comprobamos si el proyecto actual es el primer proyecto y en ese caso miramos que el padre no sea nulo
+        para que no haya errores al querer obtener los valores de sus parámetros.
+    -   Finalmente, añadimos las tareas del proyecto al JSON y establecemos el proyecto actual que hemos incializado
+        como proyeto anterior para preparar la siguiente iteración.
+     */
     public void visitProject(Project p) {
         proyectoActual = createComponent(p);
         proyectoActual.put("class", "Proyecto");
@@ -41,6 +49,12 @@ public class ElementVisitor implements Visitor{
         proyectoAnterior = proyectoActual;
     }
 
+    /*
+    -   Inicializamos las tareas del proyecto como un nuevo JSONObject
+    -   Inicializamos el array de intervalos de la tarea como un JSONArray
+    -   Recorremos el array de intervalos y generamos un JSONObject para cada uno de ellos, añadiendo sus datos
+    -   Añadimos los intervalos generados como JSONObject al JSONArray de intervalos asociado a la tarea
+     */
     public void visitTask(Task t) {
         JSONObject Task = new JSONObject();
         JSONArray arrayIntervalos = new JSONArray();
@@ -218,4 +232,37 @@ public class ElementVisitor implements Visitor{
         return duration;
     }
     //endregion
+
+    @Override
+    public ArrayList<Component> searchByTag(Project p, String tag){
+        ArrayList<Component> componentList = new ArrayList<>();
+
+        for(String tagItem : p.getTagList()){
+            if(tag.equalsIgnoreCase(tagItem)){
+                componentList.add(p);
+            }
+        }
+
+        for(Component compItem : p.getCompList()){
+            if(compItem instanceof Task){
+                componentList.addAll(searchByTag((Task) compItem, tag));
+            }
+            else{
+                componentList.addAll(searchByTag((Project) compItem, tag));
+            }
+        }
+        return componentList;
+    }
+
+    @Override
+    public ArrayList<Component> searchByTag(Task t, String tag){
+        ArrayList<Component> component = new ArrayList<>();
+
+        for(String tagItem : t.getTagList()){
+            if(tag.equalsIgnoreCase(tagItem)){
+                component.add(t);
+            }
+        }
+        return component;
+    }
 }
