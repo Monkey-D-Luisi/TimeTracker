@@ -4,8 +4,8 @@ public class SearchByTag implements Visitor{
     private String tag = "";
     private ArrayList<Component> result = new ArrayList<>();
 
-    public SearchByTag() {
-        this.tag = "java";
+    public SearchByTag(String t) {
+        this.tag = t;
     }
 
     public ArrayList<Component> getResult() {
@@ -34,7 +34,6 @@ public class SearchByTag implements Visitor{
 
 
     public ArrayList<Component> search(Task t, String tag){
-
         for(String tagItem : t.getTagList()){
             if(tag.equalsIgnoreCase(tagItem)){
                 result.add(t);

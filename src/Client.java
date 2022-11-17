@@ -6,9 +6,9 @@ import java.util.Arrays;
 
 public class Client {
     public static void main(String[] args) throws InterruptedException{
-        testA();
+        //testA();
         //testB();
-        //loadData("fita1.json");
+        loadData("fita1.json");
         System.exit(0);
     }
 
@@ -31,7 +31,7 @@ public class Client {
         //System.out.println(rootProject.toString());
 
         ArrayList<Component> searchedTags = new ArrayList<>();
-        Visitor v = new SearchByTag();
+        Visitor v = new SearchByTag("java");
 
         rootProject.accept(v);
         searchedTags = ((SearchByTag) v).getResult();

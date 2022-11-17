@@ -17,6 +17,32 @@ public class ElementVisitor implements Visitor{
     //endregion
 
     //region -------------MÉTODOS-------------
+    public void visitProject(Project p) {
+        for (Component element: p.getCompList()){
+            element.accept(this);
+        }
+        createJSONProject(p);
+    }
+
+    public void visitTask(Task t) {
+        createJSONTask(t);
+    }
+
+    private static JSONObject createJSONComponent(Component c){
+        JSONObject tempObject = new JSONObject();
+
+        String father = c.getFather() != null ? c.getFather().getCompName() : null;
+
+        tempObject.put("father", father);
+        tempObject.put("startDate", c.getStartDate());
+        tempObject.put("endDate", c.getEndDate());
+        tempObject.put("duration", c.getTime());
+        tempObject.put("tagList", c.getTagList());
+        tempObject.put("name", c.getCompName());
+
+        return tempObject;
+    }
+
     /*
     -   Llamamos al método createComponent(p) para inicializar el proyecto actual como JSONObject
     -   Comprobamos que haya tareas asociadas al proyecto y en caso afirmativo las añadimos al JSON
@@ -25,8 +51,8 @@ public class ElementVisitor implements Visitor{
     -   Finalmente, añadimos las tareas del proyecto al JSON y establecemos el proyecto actual que hemos incializado
         como proyeto anterior para preparar la siguiente iteración.
      */
-    public void visitProject(Project p) {
-        proyectoActual = createComponent(p);
+    private void createJSONProject(Project p){
+        proyectoActual = createJSONComponent(p);
         proyectoActual.put("class", "Proyecto");
 
         if (tareas.length() != 0) {
@@ -55,11 +81,11 @@ public class ElementVisitor implements Visitor{
     -   Recorremos el array de intervalos y generamos un JSONObject para cada uno de ellos, añadiendo sus datos
     -   Añadimos los intervalos generados como JSONObject al JSONArray de intervalos asociado a la tarea
      */
-    public void visitTask(Task t) {
+    private void createJSONTask(Task t){
         JSONObject Task = new JSONObject();
         JSONArray arrayIntervalos = new JSONArray();
 
-        Task = createComponent(t);
+        Task = createJSONComponent(t);
         Task.put("class", "Tarea");
 
         for (Interval interval : t.getIntervalList()) {
@@ -71,21 +97,6 @@ public class ElementVisitor implements Visitor{
         }
         Task.put("intervalos", arrayIntervalos);
         tareas.put(Task);
-    }
-
-    private static JSONObject createComponent(Component c){
-        JSONObject tempObject = new JSONObject();
-
-        String father = c.getFather() != null ? c.getFather().getCompName() : null;
-
-        tempObject.put("father", father);
-        tempObject.put("startDate", c.getStartDate());
-        tempObject.put("endDate", c.getEndDate());
-        tempObject.put("duration", c.getTime());
-        tempObject.put("tagList", c.getTagList());
-        tempObject.put("name", c.getCompName());
-
-        return tempObject;
     }
 
     public void save(String fileName) throws IOException {
