@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -30,10 +31,11 @@ public class Client {
         //System.out.println(rootProject.toString());
 
         ArrayList<Component> searchedTags = new ArrayList<>();
-        Visitor v = new ElementVisitor();
+        Visitor v = new SearchByTag();
+
         rootProject.accept(v);
-        String tagToSearch = "C++";
-        searchedTags = v.searchByTag(rootProject, tagToSearch);
+        searchedTags = ((SearchByTag) v).getResult();
+
 
         for (Component item : searchedTags){
             System.out.println(item.getCompName());

@@ -49,9 +49,9 @@ public class Project extends Component{
 
     @Override
     public void accept(Visitor v){
-        for (Component element: this.compList){
+        /*for (Component element: this.compList){
             element.accept(v);
-        }
+        }*/
         v.visitProject(this);
     }
 
