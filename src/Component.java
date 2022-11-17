@@ -1,11 +1,12 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+
 
 public abstract class Component {
-    //region -------------ATRIBUTOS-------------
-    protected String compName = null;
+  //region -------------ATRIBUTOS-------------
+  protected String compName = null;
     protected Project father = null;
     protected LocalDateTime startDate = null;
     protected LocalDateTime endDate = null;
