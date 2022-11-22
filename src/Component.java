@@ -1,9 +1,8 @@
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
+import java.text.MessageFormat;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -94,8 +93,10 @@ public abstract class Component {
     }
 
     public void printer(){
-        logger.info(marker,("%-16s %-19s %-25s %-25s %-10s \n"+ "activity:"+ this.getCompName()+
-                this.getStartDate().format(timeFormatter)+this.getEndDate().format(timeFormatter)+ this.getTime().getSeconds()));
+        String message =  String.format("%-16s", "activity:") + String.format("%-19s", this.getCompName()) +
+                        String.format("%-25s", this.getStartDate().format(timeFormatter)) + String.format("%-25s", this.getEndDate().format(timeFormatter)) +
+                        String.format("%-10s", this.getTime().getSeconds());
+        logger.info(marker, message);
     }
 
     public abstract void accept(Visitor v);

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class ElementVisitor implements Visitor{
+public class JsonVisitor implements Visitor{
     //region -------------ATRIBUTOS-------------
     JSONObject proyectoActual = new JSONObject();
     JSONObject proyectoAnterior = new JSONObject();
@@ -20,7 +20,7 @@ public class ElementVisitor implements Visitor{
     JSONArray proyectos = new JSONArray();
     JSONArray tareas = new JSONArray();
 
-    protected Logger logger = LoggerFactory.getLogger(ElementVisitor.class);
+    protected Logger logger = LoggerFactory.getLogger(JsonVisitor.class);
 
     protected Marker marker = MarkerFactory.getMarker("Milestone1");
     //endregion

@@ -1,51 +1,32 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
 public class Client {
   public static void main(String[] args) throws InterruptedException {
-    testA();
+    //testA();
     testB();
     //loadData("fita1.json");
+    //testFita2();
     System.exit(0);
   }
 
   private static void testA() {
-    Project rootProject = new Project("root");
-    Project softwareDesignProject = new Project("Software Design", rootProject,
-            new ArrayList<String>(Arrays.asList("java", "flutter")));
-    Project softwareTestingProject = new Project("Software Testing", rootProject,
-            new ArrayList<String>(Arrays.asList("c++", "Java", "python")));
-    Project databaseProject = new Project("Databases", rootProject,
-            new ArrayList<String>(Arrays.asList("SQL", "python", "C++")));
-    Task transportationTask = new Task("transportation", rootProject);
-
-    Project problemProject = new Project("Problems", softwareDesignProject);
-    Project timeTrackerProject = new Project("Time Tracker", softwareDesignProject);
-    Task firsListTask = new Task("First List", problemProject,
-            new ArrayList<String>(Arrays.asList("java")));
-    Task secondListTask = new Task("Second List", problemProject,
-            new ArrayList<String>(Arrays.asList("Dart")));
-    Task readHandoutTask = new Task("Read Handout", timeTrackerProject);
-    Task firstMilestoneTask = new Task("First Milestone", timeTrackerProject,
-            new ArrayList<String>(Arrays.asList("Java", "IntelliJ")));
-
-    //System.out.println(rootProject.toString());
-
-    ArrayList<Component> searchedTags = new ArrayList<>();
-    Visitor v = new SearchByTag("python");
-
-    rootProject.accept(v);
-    ((SearchByTag) v).print();
-
+    Project root = createTree();
   }
 
   private static void testB() throws InterruptedException {
     Clock ourTimer = Clock.getInstance();
 
+    Logger logger = LoggerFactory.getLogger(Component.class);
+    Marker marker = MarkerFactory.getMarker("Milestone1");
+
     Project rootProject = new Project("root");
     Project softwareDesignProject = new Project("Software Design", rootProject,
             new ArrayList<String>(Arrays.asList("java", "flutter")));
@@ -65,48 +46,68 @@ public class Client {
     Task firstMilestoneTask = new Task("First Milestone", timeTrackerProject,
             new ArrayList<String>(Arrays.asList("Java", "IntelliJ")));
 
-    System.out.format("%-16s %-19s %-25s %-25s %-10s \n",
-            "", "", "initial date", "final date", "duration");
-    System.out.println("start test");
+    String message =  String.format("%-20s", "") + String.format("%-19s", "") +
+            String.format("%-25s", "initial date") + String.format("%-25s", "final date") +
+            String.format("%-4s", "duration");
+    logger.info(marker, message);
+
+    logger.info(marker,"start tests");
 
     transportationTask.start();
-    System.out.println("transportation starts");
+
     Thread.sleep(6000);
     transportationTask.stop();
-    System.out.println("transportation stops");
 
     Thread.sleep(2000);
 
     firsListTask.start();
-    System.out.println("first list starts");
+
     Thread.sleep(6000);
 
     secondListTask.start();
-    System.out.println("second list starts");
     Thread.sleep(4000);
 
     firsListTask.stop();
-    System.out.println("first list stops");
 
     Thread.sleep(2000);
     secondListTask.stop();
-    System.out.println("second list stops");
 
     Thread.sleep(2000);
 
     transportationTask.start();
-    System.out.println("transportation starts");
     Thread.sleep(4000);
     transportationTask.stop();
-    System.out.println("transportation stops");
 
-    System.out.println("end of tests");
+    logger.info(marker,"end of tests");
 
     saveData(rootProject);
   }
 
+  private static Project createTree() {
+    Project rootProject = new Project("root");
+    Project softwareDesignProject = new Project("Software Design", rootProject,
+            new ArrayList<String>(Arrays.asList("java", "flutter")));
+    Project softwareTestingProject = new Project("Software Testing", rootProject,
+            new ArrayList<String>(Arrays.asList("c++", "Java", "python")));
+    Project databaseProject = new Project("Databases", rootProject,
+            new ArrayList<String>(Arrays.asList("SQL", "python", "C++")));
+    Task transportationTask = new Task("transportation", rootProject);
+
+    Project problemProject = new Project("Problems", softwareDesignProject);
+    Project timeTrackerProject = new Project("Time Tracker", softwareDesignProject);
+    Task firsListTask = new Task("First List", problemProject,
+            new ArrayList<String>(Arrays.asList("java")));
+    Task secondListTask = new Task("Second List", problemProject,
+            new ArrayList<String>(Arrays.asList("Dart")));
+    Task readHandoutTask = new Task("Read Handout", timeTrackerProject);
+    Task firstMilestoneTask = new Task("First Milestone", timeTrackerProject,
+            new ArrayList<String>(Arrays.asList("Java", "IntelliJ")));
+
+    return rootProject;
+  }
+
   private static void saveData(Project root) {
-    ElementVisitor v = new ElementVisitor();
+    JsonVisitor v = new JsonVisitor();
     root.accept(v);
     try {
       v.save("fita1.json");
@@ -117,7 +118,7 @@ public class Client {
   }
 
   private static void loadData(String filename) {
-    ElementVisitor v = new ElementVisitor();
+    JsonVisitor v = new JsonVisitor();
     Project root = null;
     try {
       root = v.load("./datos/" + filename);
@@ -125,6 +126,16 @@ public class Client {
       v.print();
     } catch (FileNotFoundException e) {
       e.printStackTrace();
+    }
+  }
+
+  private static void testFita2(){
+    Project root = createTree();
+
+    ArrayList<String> tagList = new ArrayList<String>(Arrays.asList("java", "JAVA", "intellij", "c++", "python"));
+    for (String tag : tagList) {
+      Visitor v = new SearchByTag(tag);
+      root.accept(v);
     }
   }
 }

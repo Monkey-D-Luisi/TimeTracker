@@ -59,8 +59,10 @@ public class Interval implements Observer {
 
     //region -------------MÉTODOS-------------
     private void printer(){
-        logger.info(marker,("%-16s %-19s %-25s %-25s %-10s \n"+ "Interval:"+ ""+
-                initialTime.format(timeFormatter)+ endTime.format(timeFormatter)+ time.getSeconds()));
+        String message = String.format("%-17s", "Interval:") + String.format("%-19s", "") +
+                String.format("%-25s", initialTime.format(timeFormatter)) + String.format("%-25s", endTime.format(timeFormatter)) +
+                String.format("%-18s", time.getSeconds());
+        logger.info(marker, message);
     }
     @Override
     public void update(Observable o, Object arg) {
