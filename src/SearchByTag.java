@@ -1,8 +1,18 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
+
 import java.util.ArrayList;
+
 
 public class SearchByTag implements Visitor {
   private String tag = "";
   private ArrayList<Component> result = new ArrayList<>();
+
+  protected Logger logger = LoggerFactory.getLogger(SearchByTag.class);
+
+  protected Marker marker = MarkerFactory.getMarker("Milestone2");
 
   //region -------------CONSTRUCTOR-------------
   public SearchByTag(String t) {
@@ -45,6 +55,12 @@ public class SearchByTag implements Visitor {
       }
     }
     return result;
+  }
+
+  public void print(){
+    for (Component item : this.getResult()) {
+      logger.info(marker,item.getCompName());
+    }
   }
   //endregion
 }

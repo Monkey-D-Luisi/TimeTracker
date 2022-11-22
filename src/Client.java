@@ -4,10 +4,11 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
 public class Client {
   public static void main(String[] args) throws InterruptedException {
     testA();
-    //testB();
+    testB();
     //loadData("fita1.json");
     System.exit(0);
   }
@@ -38,12 +39,8 @@ public class Client {
     Visitor v = new SearchByTag("python");
 
     rootProject.accept(v);
-    searchedTags = ((SearchByTag) v).getResult();
+    ((SearchByTag) v).print();
 
-
-    for (Component item : searchedTags) {
-      System.out.println(item.getCompName());
-    }
   }
 
   private static void testB() throws InterruptedException {

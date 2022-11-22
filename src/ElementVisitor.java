@@ -1,6 +1,11 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
+
 import java.io.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -14,6 +19,10 @@ public class ElementVisitor implements Visitor{
 
     JSONArray proyectos = new JSONArray();
     JSONArray tareas = new JSONArray();
+
+    protected Logger logger = LoggerFactory.getLogger(ElementVisitor.class);
+
+    protected Marker marker = MarkerFactory.getMarker("Milestone1");
     //endregion
 
     //region -------------MÉTODOS-------------
@@ -108,7 +117,7 @@ public class ElementVisitor implements Visitor{
         }
     }
     public void print() {
-        System.out.println(proyectoAnterior.toString(4));
+        logger.debug(marker,proyectoAnterior.toString(4));
 
     }
 

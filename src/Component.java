@@ -1,3 +1,10 @@
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,6 +20,10 @@ public abstract class Component {
     protected ArrayList<String> tagList = new ArrayList<>();
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private Duration time = Duration.ZERO;
+
+    protected Logger logger = LoggerFactory.getLogger(Component.class);
+
+    protected Marker marker = MarkerFactory.getMarker("Milestone1");
     //endregion
 
     //region -------------CONSTRUCTORES-------------
@@ -83,8 +94,8 @@ public abstract class Component {
     }
 
     public void printer(){
-        System.out.format("%-16s %-19s %-25s %-25s %-10s \n", "activity:", this.getCompName(),
-                this.getStartDate().format(timeFormatter), this.getEndDate().format(timeFormatter), this.getTime().getSeconds());
+        logger.info(marker,("%-16s %-19s %-25s %-25s %-10s \n"+ "activity:"+ this.getCompName()+
+                this.getStartDate().format(timeFormatter)+this.getEndDate().format(timeFormatter)+ this.getTime().getSeconds()));
     }
 
     public abstract void accept(Visitor v);

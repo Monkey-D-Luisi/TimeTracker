@@ -40,6 +40,7 @@ public class Task extends Component{
     }
 
     public void start(){
+        logger.warn(marker, this.compName + " started");
         Interval currInterval = new Interval(LocalDateTime.now(), this);
         intervalList.add(currInterval);
         Clock.getInstance().addObserver(currInterval);
@@ -50,8 +51,8 @@ public class Task extends Component{
     }
 
     public void stop(){
+        logger.warn(marker, this.compName + " stopped");
         Interval interval = intervalList.get(intervalList.size() - 1);
-
         this.setEndDate(LocalDateTime.now());
         Clock.getInstance().deleteObserver(interval);;
     }

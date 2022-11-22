@@ -1,3 +1,8 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -11,6 +16,10 @@ public class Interval implements Observer {
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private Task owner;
     private Duration time = Duration.ZERO;
+
+    protected Logger logger = LoggerFactory.getLogger(Interval.class);
+
+    protected Marker marker = MarkerFactory.getMarker("Milestone1");
     //endregion
 
     //region -------------CONSTRUCTORES-------------
@@ -50,8 +59,8 @@ public class Interval implements Observer {
 
     //region -------------MÉTODOS-------------
     private void printer(){
-        System.out.format("%-16s %-19s %-25s %-25s %-10s \n", "Interval:", "",
-                initialTime.format(timeFormatter), endTime.format(timeFormatter), time.getSeconds());
+        logger.info(marker,("%-16s %-19s %-25s %-25s %-10s \n"+ "Interval:"+ ""+
+                initialTime.format(timeFormatter)+ endTime.format(timeFormatter)+ time.getSeconds()));
     }
     @Override
     public void update(Observable o, Object arg) {
