@@ -6,10 +6,13 @@ class Interval{
 - timeFormatter : DateTimeFormatter
 - owner : Task
 - time : Duration
+- logger : Logger
+- marker : Marker
 + Interval(owner : Task, begin : LocalDateTime , end : LocalDateTime, duration : Duration)
++ Interval(begin : LocalDateTime , end : LocalDateTime, duration : Duration)
 + Interval(begin: LocalDateTime, owner : Task)
++ Interval(owner : Task)
 + printer()
-+ stopTicking()
 + update(o : Observable ,arg : Object)
 }
 
@@ -17,6 +20,8 @@ class Client{
 + {static} main(String[] args)
 - {static} testA()
 - {static} testB()
+- {static} testFita2()
+- {static} createTree()
 - {static} saveData(root : Project)
 - {static} loadData(filename : String)
 }
@@ -30,18 +35,35 @@ class Clock extends Observable{
 + stop()
 }
 
-class ElementVisitor implements Visitor{
+class JsonVisitor implements Visitor{
 - proyectoActual : JSONObject
 - proyectoAnterior : JSONObject
 - proyectos: JSONArray
 - tareas : JSONArray
+- logger : Logger
+- marker : Marker
 + visitProject(p : Project)
 + visitTask(t : Task)
-- createComponent(c : Component) : JSONObject
+- createjsoncomponent(c : Component) : JSONObject
+- createjsonproject(p: Project) : JSONObject
+- createjsontask(t: Task) : JSONObject
 - createTree(jsonObject : JSONObject, father : Project) : Component
 + save(fileName : String)
 + load(fileName : String) : Project
 + print()
+}
+
+class SearchByTag implements Visitor{
+- tag : String
+- result : ArrayList<Component>
+- logger : Logger
+- marker : Marker
++ SearchByTag(tag : String)
++ visitProject(p : Project)
++ visitTask(t : Task)
++ search(p : Project,tag : String)
++ search(t : Task,tag : String)
+- print(list : ArrayList<Component>, tag : String)
 }
 
 abstract class Component{
@@ -51,6 +73,9 @@ abstract class Component{
 - endDate : LocalDateTime
 - tagList : ArrayList<String>
 - time : Duration
+- timeFormatter : DateTimeFormatter
+- logger : Logger
+- marker : Marker
 + Component (name : String, start : LocalDateTime, LocalDateTime : LocalDateTime, tags : ArrayList<String>)
 + Component(compName : String, father : Project , tagList : ArrayList<String>)
 + Component (compName : String, father : Project )
@@ -88,8 +113,6 @@ class Task extends Component{
 interface Visitor{
 + visitProject(p Project)
 + visitTask(t Task)
-+ save(s : String)
-+ load(name: String) : Project
 }
 
 class Observer{

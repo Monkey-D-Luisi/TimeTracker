@@ -1,12 +1,11 @@
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
-import org.slf4j.MarkerFactory;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 
 public class Client {
   public static void main(String[] args) throws InterruptedException {
@@ -36,22 +35,17 @@ public class Client {
             new ArrayList<String>(Arrays.asList("SQL", "python", "C++")));
     Task transportationTask = new Task("transportation", rootProject);
 
-    Project problemProject = new Project("Problems", softwareDesignProject);
     Project timeTrackerProject = new Project("Time Tracker", softwareDesignProject);
-    Task firsListTask = new Task("First List", problemProject,
-            new ArrayList<String>(Arrays.asList("java")));
-    Task secondListTask = new Task("Second List", problemProject,
-            new ArrayList<String>(Arrays.asList("Dart")));
     Task readHandoutTask = new Task("Read Handout", timeTrackerProject);
     Task firstMilestoneTask = new Task("First Milestone", timeTrackerProject,
             new ArrayList<String>(Arrays.asList("Java", "IntelliJ")));
 
-    String message =  String.format("%-20s", "") + String.format("%-19s", "") +
-            String.format("%-25s", "initial date") + String.format("%-25s", "final date") +
-            String.format("%-4s", "duration");
+    String message =  String.format("%-20s", "") + String.format("%-19s", "")
+            + String.format("%-25s", "initial date") + String.format("%-25s", "final date")
+            + String.format("%-4s", "duration");
     logger.info(marker, message);
 
-    logger.info(marker,"start tests");
+    logger.info(marker, "start tests");
 
     transportationTask.start();
 
@@ -59,6 +53,13 @@ public class Client {
     transportationTask.stop();
 
     Thread.sleep(2000);
+
+    Project problemProject = new Project("Problems", softwareDesignProject);
+
+    Task firsListTask = new Task("First List", problemProject,
+            new ArrayList<String>(Arrays.asList("java")));
+    Task secondListTask = new Task("Second List", problemProject,
+            new ArrayList<String>(Arrays.asList("Dart")));
 
     firsListTask.start();
 
@@ -78,7 +79,7 @@ public class Client {
     Thread.sleep(4000);
     transportationTask.stop();
 
-    logger.info(marker,"end of tests");
+    logger.info(marker, "end of tests");
 
     saveData(rootProject);
   }
@@ -129,10 +130,11 @@ public class Client {
     }
   }
 
-  private static void testFita2(){
+  private static void testFita2() {
     Project root = createTree();
 
-    ArrayList<String> tagList = new ArrayList<String>(Arrays.asList("java", "JAVA", "intellij", "c++", "python"));
+    ArrayList<String> tagList = new ArrayList<String>(Arrays.asList("java",
+            "JAVA", "intellij", "c++", "python"));
     for (String tag : tagList) {
       Visitor v = new SearchByTag(tag);
       root.accept(v);

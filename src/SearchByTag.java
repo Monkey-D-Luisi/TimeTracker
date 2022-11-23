@@ -1,10 +1,9 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 
 public class SearchByTag implements Visitor {
@@ -33,7 +32,7 @@ public class SearchByTag implements Visitor {
   }
 
   public void visitTask(Task t) {
-      this.search(t, tag);
+    this.search(t, tag);
   }
 
   public void search(Project p, String tag) {
@@ -59,14 +58,14 @@ public class SearchByTag implements Visitor {
     }
   }
 
-  private void print(ArrayList<Component> list, String tag){
+  private void print(ArrayList<Component> list, String tag) {
 
     ArrayList<String> message = new ArrayList<>();
     for (Component item : list) {
       message.add(item.getCompName());
     }
-    logger.info(marker, "Searched tag: " + tag + String.format("%10s", "-> ") + "{}", (Object) message);
-
+    logger.info(marker, "Searched tag: " + tag
+            + String.format("%10s", "-> ") + "{}", (Object) message);
   }
   //endregion
 }
