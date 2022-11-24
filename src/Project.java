@@ -3,6 +3,9 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+/**
+ * Implementation of Component that represents a project
+ */
 public class Project extends Component {
 
   //region -------------ATRIBUTOS-------------

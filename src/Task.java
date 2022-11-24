@@ -2,6 +2,9 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+/**
+ * Implementation of Component that represents a task inside a project
+ */
 public class Task extends Component {
   //region -------------ATRIBUTOS-------------
   ArrayList<Interval> intervalList = new ArrayList<>();

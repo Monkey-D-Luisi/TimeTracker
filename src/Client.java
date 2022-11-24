@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
+/**
+ * Main class of project
+ */
 public class Client {
   public static void main(String[] args) throws InterruptedException {
     //testA();

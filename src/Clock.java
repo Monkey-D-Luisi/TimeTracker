@@ -3,6 +3,10 @@ import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Class that represents a clock with a timer asn
+ * implements observer pattern to update all the instances of different classes that are observing
+ */
 public class Clock extends Observable {
   private LocalDateTime date;
   private Timer timer;

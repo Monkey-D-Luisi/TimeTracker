@@ -11,8 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
-
-
+/**
+ * Class that implements the visitor pattern to visit components and
+ * generate files with json data or logs
+ */
 public class JsonVisitor implements Visitor {
   //region -------------ATRIBUTOS-------------
   JSONObject proyectoActual = new JSONObject();

@@ -8,7 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
-
+/**
+ * Abstract class that represents an element with a start, a duration and, maybe, an end and a father.
+ * The implemented class can update his own end time and duration and, recursively, the same for his predecessors.
+ * The implemented class can, too, print the data.
+ */
 public abstract class Component {
   //region -------------ATRIBUTOS-------------
   protected String compName = null;
@@ -120,6 +124,10 @@ public abstract class Component {
     logger.info(marker, message);
   }
 
+  /**
+   * Method of te visitor pattern
+   * @param v the vistor that we are accepting
+   */
   public abstract void accept(Visitor v);
   //endregion
 }

@@ -8,6 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
+/**
+ * Class that represents an interval inside a task and
+ * implements observer pattern to be updated using the data of the observable
+ */
 public class Interval implements Observer {
   //region -------------ATRIBUTOS-------------
   private LocalDateTime initialTime;

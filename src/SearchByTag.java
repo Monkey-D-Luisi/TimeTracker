@@ -5,7 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
-
+/**
+ * Class that implements the visitor pattern to visit components and
+ * generate files with logs given a marker
+ */
 public class SearchByTag implements Visitor {
   private String tag = "";
   private ArrayList<Component> result = new ArrayList<>();
