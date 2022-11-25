@@ -9,8 +9,8 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
 /**
- * Class that represents an interval inside a task and
- * implements observer pattern to be updated using the data of the observable
+ * Clase que representa un intervalo dentro de una tarea y
+   implementa el patrón observer para ser actualizado utilizando la información de la instancia observada
  */
 public class Interval implements Observer {
   //region -------------ATRIBUTOS-------------

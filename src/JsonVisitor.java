@@ -12,8 +12,8 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
 /**
- * Class that implements the visitor pattern to visit components and
- * generate files with json data or logs
+ * Clase que implmenta el patrón visitor para visitar componentes y
+   así generar archivos con datos en formato json o logs en html
  */
 public class JsonVisitor implements Visitor {
   //region -------------ATRIBUTOS-------------
@@ -55,13 +55,13 @@ public class JsonVisitor implements Visitor {
     return tempObject;
   }
 
-  /*
-    - Llamamos al método createComponent(p) para inicializar el proyecto actual como JSONObject
-    - Comprobamos que haya tareas asociadas al proyecto y en caso afirmativo las añadimos al JSON
-    - Comprobamos si el proyecto actual es el primer proyecto y en ese caso miramos que el padre
+  /**
+    * Llamamos al método createComponent(p) para inicializar el proyecto actual como JSONObject
+    * Comprobamos que haya tareas asociadas al proyecto y en caso afirmativo las añadimos al JSON
+    * Comprobamos si el proyecto actual es el primer proyecto y en ese caso miramos que el padre
       no sea nulo
       para que no haya errores al querer obtener los valores de sus parámetros.
-    - Finalmente, añadimos las tareas del proyecto al JSON y establecemos el proyecto actual que
+    * Finalmente, añadimos las tareas del proyecto al JSON y establecemos el proyecto actual que
       hemos incializado
       como proyeto anterior para preparar la siguiente iteración.
   */
@@ -90,12 +90,12 @@ public class JsonVisitor implements Visitor {
     proyectoAnterior = proyectoActual;
   }
 
-  /*
-    -   Inicializamos las tareas del proyecto como un nuevo JSONObject
-    -   Inicializamos el array de intervalos de la tarea como un JSONArray
-    -   Recorremos el array de intervalos y generamos un JSONObject para
+  /**
+    *   Inicializamos las tareas del proyecto como un nuevo JSONObject
+    *   Inicializamos el array de intervalos de la tarea como un JSONArray
+    *   Recorremos el array de intervalos y generamos un JSONObject para
         cada uno de ellos, añadiendo sus datos
-    -   Añadimos los intervalos generados como JSONObject al JSONArray de
+    *   Añadimos los intervalos generados como JSONObject al JSONArray de
         intervalos asociado a la tarea
    */
   private void createjsontask(Task t) {
@@ -141,24 +141,24 @@ public class JsonVisitor implements Visitor {
     return p;
   }
 
-  /*
+  /**
     Creamos el árbol de la siguiente manera:
-    - Comprobamos si el objeto tiene padre y en caso de que sí tenga:
-        - Comprobamos si el objeto es una Tarea:
-          - 1 Llamamos al constructor de Tarea con los parámetros adecuados
+    * Comprobamos si el objeto tiene padre y en caso de que sí tenga:
+        * Comprobamos si el objeto es una Tarea:
+          * 1 Llamamos al constructor de Tarea con los parámetros adecuados
             (father, name, startDate, endDate, time, tags)
-          - 2 Creamos los intervalos
-          - 3 Añadimos los intervalos a la Tarea
-          - 4 Devolvemos Tarea como un Componente de un Proyecto
-        - En el caso de que sea un Proyecto:
-          - 1 Llamamos al constructor de Proyecto con los parámetros adecuados
+          * 2 Creamos los intervalos
+          * 3 Añadimos los intervalos a la Tarea
+          * 4 Devolvemos Tarea como un Componente de un Proyecto
+        * En el caso de que sea un Proyecto:
+          * 1 Llamamos al constructor de Proyecto con los parámetros adecuados
             (father, name, startDate, endDate, time, tags)
-          - 2 De manera recursiva creamos los componentes del Proyecto
-          - 3 Esto componentes se añaden al Proyecto father
-          - 4 Devolvemos el Proyecto root
-    - En el caso de que el father sea nulo:
-      - Creamos un proyecto root
-      - Creamos la lista de componentes de dicho proyecto de forma recursiva
+          * 2 De manera recursiva creamos los componentes del Proyecto
+          * 3 Esto componentes se añaden al Proyecto father
+          * 4 Devolvemos el Proyecto root
+    * En el caso de que el father sea nulo:
+      * Creamos un proyecto root
+      * Creamos la lista de componentes de dicho proyecto de forma recursiva
   */
   private Component createTree(JSONObject jsonObject, Project father) {
     ArrayList<Component> components = new ArrayList<>();
@@ -252,7 +252,9 @@ public class JsonVisitor implements Visitor {
     return tags;
   }
 
-  /*Transforma un valor String a Duration*/
+  /**
+   * Transforma un valor String a Duration
+   */
   private Duration getTime(JSONObject obj, String key) {
     Duration duration = null;
     if (obj.isNull(key)) {

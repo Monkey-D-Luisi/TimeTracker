@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
- * Implementation of Component that represents a project
+ * Implementación de Componente que reprsenta un proyecto
  */
 public class Project extends Component {
 

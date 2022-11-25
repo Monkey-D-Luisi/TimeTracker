@@ -9,9 +9,9 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
 /**
- * Abstract class that represents an element with a start, a duration and, maybe, an end and a father.
- * The implemented class can update his own end time and duration and, recursively, the same for his predecessors.
- * The implemented class can, too, print the data.
+ * Clase abstracta que representa un elemento con final, duración y, quizás, fin y padre
+ * La implementración podrá actualizar su porpio final y duración así como, recursivamente, los de sus predecesores
+ * La implementación también puede pintar los datos
  */
 public abstract class Component {
   //region -------------ATRIBUTOS-------------
@@ -125,8 +125,8 @@ public abstract class Component {
   }
 
   /**
-   * Method of te visitor pattern
-   * @param v the vistor that we are accepting
+   * Método del patrón visitor
+   * @param v el visitante que estamos aceptando
    */
   public abstract void accept(Visitor v);
   //endregion

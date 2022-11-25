@@ -4,8 +4,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Class that represents a clock with a timer asn
- * implements observer pattern to update all the instances of different classes that are observing
+ * Clase que representa un reloj con temporizador y
+   implementa el patrón observer para actualizar todas las instancias de las diferentes clases observadoras
  */
 public class Clock extends Observable {
   private LocalDateTime date;

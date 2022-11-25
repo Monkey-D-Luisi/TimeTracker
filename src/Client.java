@@ -8,7 +8,7 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
 /**
- * Main class of project
+ * Clase principal del proyecto
  */
 public class Client {
   public static void main(String[] args) throws InterruptedException {

@@ -3,7 +3,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
- * Implementation of Component that represents a task inside a project
+ * Implementación de Componente que representa una tarea dentro de un proyecto
  */
 public class Task extends Component {
   //region -------------ATRIBUTOS-------------
