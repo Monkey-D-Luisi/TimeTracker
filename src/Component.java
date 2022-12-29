@@ -14,7 +14,12 @@ import org.slf4j.MarkerFactory;
  * La implementación también puede pintar los datos
  */
 public abstract class Component {
+  public int getId() {
+    return Id;
+  }
+
   //region -------------ATRIBUTOS-------------
+  protected int Id;
   protected String compName = null;
   protected Project father = null;
   protected LocalDateTime startDate = null;
@@ -30,8 +35,10 @@ public abstract class Component {
   //endregion
 
   //region -------------CONSTRUCTORES-------------
-  public Component(String name, Project father, LocalDateTime start, LocalDateTime end,
-                    ArrayList<String> tags, Duration time) {
+
+  public Component(int id, String name, Project father, LocalDateTime start, LocalDateTime end,
+                   ArrayList<String> tags, Duration time) {
+    this.Id = id;
     this.compName = name;
     this.startDate = start;
     this.endDate = end;
@@ -40,8 +47,30 @@ public abstract class Component {
     this.time = time;
   }
 
+  public Component(String name, Project father, LocalDateTime start, LocalDateTime end,
+                    ArrayList<String> tags, Duration time) {
+    this.Id = IdManager.getNewComponentId();
+    this.compName = name;
+    this.startDate = start;
+    this.endDate = end;
+    this.tagList = tags;
+    this.father = father;
+    this.time = time;
+  }
+
+  public Component(int id, String name, LocalDateTime start, LocalDateTime end,
+                   ArrayList<String> tags, Duration time) {
+    this.Id = id;
+    this.compName = name;
+    this.startDate = start;
+    this.endDate = end;
+    this.tagList = tags;
+    this.time = time;
+  }
+
   public Component(String name, LocalDateTime start, LocalDateTime end,
                       ArrayList<String> tags, Duration time) {
+    this.Id = IdManager.getNewComponentId();
     this.compName = name;
     this.startDate = start;
     this.endDate = end;
@@ -50,17 +79,20 @@ public abstract class Component {
   }
 
   public Component(String compName, Project father, ArrayList<String> tagList) {
+    this.Id = IdManager.getNewComponentId();
     this.compName = compName;
     this.father = father;
     this.tagList = tagList;
   }
 
   public Component(String compName, Project father) {
+    this.Id = IdManager.getNewComponentId();
     this.compName = compName;
     this.father = father;
   }
 
   public Component(String name) {
+    this.Id = IdManager.getNewComponentId();
     this.compName = name;
   }
   //endregion

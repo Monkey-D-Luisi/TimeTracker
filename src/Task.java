@@ -11,6 +11,12 @@ public class Task extends Component {
   //endregion
 
   //region -------------CONSTRUCTORES-------------
+
+  public Task(int id, String name, Project father, LocalDateTime start, LocalDateTime end,
+              ArrayList<String> tags, Duration time) {
+    super(id, name, father, start, end, tags, time);
+  }
+
   public Task(String name, Project father, LocalDateTime start, LocalDateTime end,
               ArrayList<String> tags, Duration time) {
     super(name, father, start, end, tags, time);

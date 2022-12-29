@@ -13,10 +13,22 @@ public class Project extends Component {
   //endregion
 
   //region -------------CONSTRUCTORES-------------
+
+  public Project(int id, String name, Project father, LocalDateTime start,
+                 LocalDateTime end, ArrayList<String> tags, Duration time) {
+    super(id, name, father, start, end, tags, time);
+    father.addComponent(this);
+  }
+
   public Project(String name, Project father, LocalDateTime start,
                  LocalDateTime end, ArrayList<String> tags, Duration time) {
     super(name, father, start, end, tags, time);
     father.addComponent(this);
+  }
+
+  public Project(int id, String name, LocalDateTime start, LocalDateTime end,
+                 ArrayList<String> tags, Duration time) {
+    super(id, name, start, end, tags, time);
   }
 
   public Project(String name, LocalDateTime start, LocalDateTime end,

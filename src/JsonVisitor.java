@@ -51,6 +51,7 @@ public class JsonVisitor implements Visitor {
     tempObject.put("duration", c.getTime());
     tempObject.put("tagList", c.getTagList());
     tempObject.put("name", c.getCompName());
+    tempObject.put("id", c.getId());
 
     return tempObject;
   }
@@ -110,6 +111,7 @@ public class JsonVisitor implements Visitor {
       intervalos.put("startDate", interval.getInitialTime());
       intervalos.put("endDate", interval.getEndTime());
       intervalos.put("duration", interval.getTime());
+      intervalos.put("id", interval.getId());
       arrayIntervalos.put(intervalos);
     }
     task.put("intervalos", arrayIntervalos);
@@ -130,6 +132,7 @@ public class JsonVisitor implements Visitor {
   }
 
   public Project load(String fileName) throws FileNotFoundException {
+    IdManager.getInstance();
     JSONObject jobject;
     JSONTokener jtokener;
     File targetFile = new File(fileName);
@@ -165,7 +168,9 @@ public class JsonVisitor implements Visitor {
 
     if (father != null) {
       if (jsonObject.get("class").equals("Tarea")) {
-        Task task = new Task(getName(jsonObject, "name"),
+        Task task = new Task(
+                    getId(jsonObject, "id"),
+                    getName(jsonObject, "name"),
                     father, getDate(jsonObject, "startDate"),
                     getDate(jsonObject, "endDate"),
                     getTags(jsonObject, "tagList"),
@@ -174,7 +179,7 @@ public class JsonVisitor implements Visitor {
 
         for (Object item : jsonObject.getJSONArray("intervalos")) {
           JSONObject jsonObjectTemp = (JSONObject) item;
-          Interval interval = new Interval(task, getDate(jsonObjectTemp, "startDate"),
+          Interval interval = new Interval(getId(jsonObject, "id"), task, getDate(jsonObjectTemp, "startDate"),
                             getDate(jsonObjectTemp, "endDate"),
                             getTime(jsonObjectTemp, "duration"));
           intervals.add(interval);
@@ -185,7 +190,7 @@ public class JsonVisitor implements Visitor {
         return task;
 
       } else {
-        Project project = new Project(getName(jsonObject, "name"),
+        Project project = new Project(getId(jsonObject, "id"), getName(jsonObject, "name"),
                         father, getDate(jsonObject, "startDate"),
                         getDate(jsonObject, "endDate"),
                         getTags(jsonObject, "tagList"), getTime(jsonObject, "duration"));
@@ -203,7 +208,7 @@ public class JsonVisitor implements Visitor {
       }
     } else {
       Project root = new Project("root");
-      Project project = new Project(getName(jsonObject, "name"), getDate(jsonObject, "startDate"),
+      Project project = new Project(getId(jsonObject, "id"), getName(jsonObject, "name"), getDate(jsonObject, "startDate"),
                     getDate(jsonObject, "endDate"), getTags(jsonObject, "tagList"),
                     getTime(jsonObject, "duration"));
 
@@ -222,6 +227,10 @@ public class JsonVisitor implements Visitor {
 
   private String getName(JSONObject gsonObj, String key) {
     return gsonObj.isNull(key) ? null : String.valueOf(gsonObj.get(key));
+  }
+
+  private int getId(JSONObject gsonObj, String key) {
+    return gsonObj.isNull(key) ? null : Integer.parseInt(String.valueOf(gsonObj.get(key)));
   }
 
   private LocalDateTime getDate(JSONObject obj, String key) {

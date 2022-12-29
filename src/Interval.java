@@ -13,7 +13,12 @@ import org.slf4j.MarkerFactory;
    implementa el patrón observer para ser actualizado utilizando la información de la instancia observada
  */
 public class Interval implements Observer {
+  public int getId() {
+    return Id;
+  }
+
   //region -------------ATRIBUTOS-------------
+  protected int Id;
   private LocalDateTime initialTime;
   private LocalDateTime endTime;
   private final DateTimeFormatter timeFormatter
@@ -27,7 +32,16 @@ public class Interval implements Observer {
   //endregion
 
   //region -------------CONSTRUCTORES-------------
+  public Interval(int id, Task owner, LocalDateTime begin, LocalDateTime end, Duration duration) {
+    this.Id = id;
+    this.owner = owner;
+    this.initialTime = begin;
+    this.endTime = end;
+    this.time = duration;
+  }
+
   public Interval(Task owner, LocalDateTime begin, LocalDateTime end, Duration duration) {
+    this.Id = IdManager.getNewIntervalId();
     this.owner = owner;
     this.initialTime = begin;
     this.endTime = end;
@@ -35,17 +49,20 @@ public class Interval implements Observer {
   }
 
   public Interval(LocalDateTime begin, LocalDateTime end, Duration duration) {
+    this.Id = IdManager.getNewIntervalId();
     this.initialTime = begin;
     this.endTime = end;
     this.time = duration;
   }
 
   public Interval(LocalDateTime begin, Task owner) {
+    this.Id = IdManager.getNewIntervalId();
     this.owner = owner;
     this.initialTime = begin;
   }
 
   public Interval(Task owner) {
+    this.Id = IdManager.getNewIntervalId();
     this.owner = owner;
     this.initialTime = LocalDateTime.now();
   }
