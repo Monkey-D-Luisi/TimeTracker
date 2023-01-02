@@ -67,41 +67,27 @@ public class Project extends Component {
     this.compList.add(c);
   }
 
+  public Component searchById(int id){
+    Component found = null;
+    if (id == this.getId()){
+      found = this;
+    }
+    else{
+      if(this.compList != null) {
+        int i = 0;
+        while(i < this.compList.size()-1 && found == null) {
+          found = this.compList.get(i).searchById(id);
+          i++;
+        }
+      }
+    }
+    return found;
+  }
+
   @Override
   public void accept(Visitor v) {
     v.visitProject(this);
   }
 
-  @Override
-  public String toString() {
-    if (father != null) {
-      return "Project{"
-              + "compName='"
-              + compName
-              + ','
-              + "\n father="
-              + father.getCompName()
-              + ','
-              + "\n tagList="
-              + tagList
-              + ','
-              + "\n compList= \n"
-              + compList
-              + ','
-              + '}';
-    } else {
-      return "Project{"
-                    + "\n compName='"
-                    + compName
-                    + ','
-                    + "\n tagList="
-                    + tagList
-                    + ','
-                    + "\n compList= \n"
-                    + compList
-                    + ','
-                    + "\n } \n";
-    }
-  }
-  //endregion
+   //endregion
 }

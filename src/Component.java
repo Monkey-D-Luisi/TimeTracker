@@ -14,9 +14,7 @@ import org.slf4j.MarkerFactory;
  * La implementación también puede pintar los datos
  */
 public abstract class Component {
-  public int getId() {
-    return Id;
-  }
+
 
   //region -------------ATRIBUTOS-------------
   protected int Id;
@@ -135,6 +133,10 @@ public abstract class Component {
   public ArrayList<String> getTagList() {
     return tagList;
   }
+
+  public int getId() {
+    return Id;
+  }
   //endregion
 
   //region -------------MÉTODOS-------------
@@ -155,6 +157,8 @@ public abstract class Component {
             + String.format("%-10s", this.getTime().getSeconds());
     logger.info(marker, message);
   }
+
+  public abstract Component searchById(int id);
 
   /**
    * Método del patrón visitor

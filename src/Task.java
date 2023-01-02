@@ -68,23 +68,17 @@ public class Task extends Component {
   }
 
   @Override
+  public Component searchById(int id){
+    if (id == this.getId()){
+      return this;
+    }
+    return null;
+  }
+
+  @Override
   public void accept(Visitor v) {
     v.visitTask(this);
   }
 
-  @Override
-  public String toString() {
-    return "Task{"
-            + "\n compName='"
-            + compName
-            + ','
-            + "\n father="
-            + father.getCompName()
-            + ','
-            + "\n tagList="
-            + tagList
-            + ','
-            + "\n } \n";
-  }
   //endregion
 }
