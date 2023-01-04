@@ -1,6 +1,10 @@
+package core;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Implementación de Componente que representa una tarea dentro de un proyecto
@@ -73,6 +77,24 @@ public class Task extends Component {
       return this;
     }
     return null;
+  }
+
+  public JSONObject toJson(int depth) {
+    // depth not used here
+    JSONObject json = new JSONObject();
+    json.put("class", "task");
+    super.toJson(json);
+    json.put("active", active);
+    if (depth>0) {
+      JSONArray jsonIntervals = new JSONArray();
+      for (Interval interval : intervalList) {
+        jsonIntervals.put(interval.toJson());
+      }
+      json.put("intervals", jsonIntervals);
+    } else {
+      json.put("intervals", new JSONArray());
+    }
+    return json;
   }
 
   @Override

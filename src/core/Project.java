@@ -1,7 +1,12 @@
-import java.lang.reflect.Array;
+package core;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Implementación de Componente que reprsenta un proyecto
@@ -75,13 +80,28 @@ public class Project extends Component {
     else{
       if(this.compList != null) {
         int i = 0;
-        while(i < this.compList.size()-1 && found == null) {
+        while(i < this.compList.size() && found == null) {
           found = this.compList.get(i).searchById(id);
           i++;
         }
       }
     }
     return found;
+  }
+
+  public JSONObject toJson(int depth) {
+    JSONObject json = new JSONObject();
+    json.put("class", "project");
+    super.toJson(json);
+    if (depth>0) {
+      JSONArray jsonActivities = new JSONArray();
+      for (Component activity : compList) {
+        jsonActivities.put(activity.toJson(depth - 1));
+        // important: decrement depth
+      }
+      json.put("activities", jsonActivities);
+    }
+    return json;
   }
 
   @Override

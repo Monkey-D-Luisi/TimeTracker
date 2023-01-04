@@ -1,6 +1,4 @@
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
+package core;
 
 public interface Visitor {
   public void visitProject(Project p);

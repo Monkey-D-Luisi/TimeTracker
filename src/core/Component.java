@@ -1,8 +1,10 @@
-import java.text.MessageFormat;
+package core;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
@@ -17,12 +19,13 @@ public abstract class Component {
 
 
   //region -------------ATRIBUTOS-------------
-  protected int Id;
+  protected int id;
   protected String compName = null;
   protected Project father = null;
   protected LocalDateTime startDate = null;
   protected LocalDateTime endDate = null;
   protected ArrayList<String> tagList = new ArrayList<>();
+  protected boolean active;
   private final DateTimeFormatter
           timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
   private Duration time = Duration.ZERO;
@@ -36,7 +39,7 @@ public abstract class Component {
 
   public Component(int id, String name, Project father, LocalDateTime start, LocalDateTime end,
                    ArrayList<String> tags, Duration time) {
-    this.Id = id;
+    this.id = id;
     this.compName = name;
     this.startDate = start;
     this.endDate = end;
@@ -47,7 +50,7 @@ public abstract class Component {
 
   public Component(String name, Project father, LocalDateTime start, LocalDateTime end,
                     ArrayList<String> tags, Duration time) {
-    this.Id = IdManager.getNewComponentId();
+    this.id = IdManager.getNewComponentId();
     this.compName = name;
     this.startDate = start;
     this.endDate = end;
@@ -58,7 +61,7 @@ public abstract class Component {
 
   public Component(int id, String name, LocalDateTime start, LocalDateTime end,
                    ArrayList<String> tags, Duration time) {
-    this.Id = id;
+    this.id = id;
     this.compName = name;
     this.startDate = start;
     this.endDate = end;
@@ -68,7 +71,7 @@ public abstract class Component {
 
   public Component(String name, LocalDateTime start, LocalDateTime end,
                       ArrayList<String> tags, Duration time) {
-    this.Id = IdManager.getNewComponentId();
+    this.id = IdManager.getNewComponentId();
     this.compName = name;
     this.startDate = start;
     this.endDate = end;
@@ -77,20 +80,20 @@ public abstract class Component {
   }
 
   public Component(String compName, Project father, ArrayList<String> tagList) {
-    this.Id = IdManager.getNewComponentId();
+    this.id = IdManager.getNewComponentId();
     this.compName = compName;
     this.father = father;
     this.tagList = tagList;
   }
 
   public Component(String compName, Project father) {
-    this.Id = IdManager.getNewComponentId();
+    this.id = IdManager.getNewComponentId();
     this.compName = compName;
     this.father = father;
   }
 
   public Component(String name) {
-    this.Id = IdManager.getNewComponentId();
+    this.id = IdManager.getNewComponentId();
     this.compName = name;
   }
   //endregion
@@ -135,7 +138,7 @@ public abstract class Component {
   }
 
   public int getId() {
-    return Id;
+    return id;
   }
   //endregion
 
@@ -165,5 +168,17 @@ public abstract class Component {
    * @param v el visitante que estamos aceptando
    */
   public abstract void accept(Visitor v);
+
+  public abstract JSONObject toJson(int depth); // added 16-dec-2022
+
+  protected void toJson(JSONObject json) {
+    json.put("id", id);
+    json.put("name", compName);
+    json.put("initialDate", startDate==null
+            ? JSONObject.NULL : timeFormatter.format(startDate));
+    json.put("finalDate", endDate==null
+            ? JSONObject.NULL : timeFormatter.format(endDate));
+    json.put("duration", time.toSeconds());
+  }
   //endregion
 }

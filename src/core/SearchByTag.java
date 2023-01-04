@@ -1,4 +1,5 @@
-import java.lang.reflect.Array;
+package core;
+
 import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

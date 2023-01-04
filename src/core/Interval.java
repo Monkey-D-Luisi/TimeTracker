@@ -1,8 +1,12 @@
+package core;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Observable;
 import java.util.Observer;
+
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
@@ -13,18 +17,15 @@ import org.slf4j.MarkerFactory;
    implementa el patrón observer para ser actualizado utilizando la información de la instancia observada
  */
 public class Interval implements Observer {
-  public int getId() {
-    return Id;
-  }
-
   //region -------------ATRIBUTOS-------------
-  protected int Id;
+  protected int id;
   private LocalDateTime initialTime;
   private LocalDateTime endTime;
   private final DateTimeFormatter timeFormatter
           = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
   private Task owner;
   private Duration time = Duration.ZERO;
+  private boolean active;
 
   protected Logger logger = LoggerFactory.getLogger(Interval.class);
 
@@ -33,7 +34,7 @@ public class Interval implements Observer {
 
   //region -------------CONSTRUCTORES-------------
   public Interval(int id, Task owner, LocalDateTime begin, LocalDateTime end, Duration duration) {
-    this.Id = id;
+    this.id = id;
     this.owner = owner;
     this.initialTime = begin;
     this.endTime = end;
@@ -41,7 +42,7 @@ public class Interval implements Observer {
   }
 
   public Interval(Task owner, LocalDateTime begin, LocalDateTime end, Duration duration) {
-    this.Id = IdManager.getNewIntervalId();
+    this.id = IdManager.getNewIntervalId();
     this.owner = owner;
     this.initialTime = begin;
     this.endTime = end;
@@ -49,20 +50,20 @@ public class Interval implements Observer {
   }
 
   public Interval(LocalDateTime begin, LocalDateTime end, Duration duration) {
-    this.Id = IdManager.getNewIntervalId();
+    this.id = IdManager.getNewIntervalId();
     this.initialTime = begin;
     this.endTime = end;
     this.time = duration;
   }
 
   public Interval(LocalDateTime begin, Task owner) {
-    this.Id = IdManager.getNewIntervalId();
+    this.id = IdManager.getNewIntervalId();
     this.owner = owner;
     this.initialTime = begin;
   }
 
   public Interval(Task owner) {
-    this.Id = IdManager.getNewIntervalId();
+    this.id = IdManager.getNewIntervalId();
     this.owner = owner;
     this.initialTime = LocalDateTime.now();
   }
@@ -88,16 +89,32 @@ public class Interval implements Observer {
   public Duration getTime() {
     return time;
   }
+  public int getId() {
+    return id;
+  }
   //endregion
 
   //region -------------MÉTODOS-------------
   private void printer() {
-    String message = String.format("%-17s", "Interval:")
+    String message = String.format("%-17s", "core.Interval:")
             + String.format("%-19s", "")
             + String.format("%-25s", initialTime.format(timeFormatter))
             + String.format("%-25s", endTime.format(timeFormatter))
             + String.format("%-18s", time.getSeconds());
     logger.info(marker, message);
+  }
+
+  public JSONObject toJson() {
+    JSONObject json = new JSONObject();
+    json.put("class", "interval");
+    json.put("id", id);
+    json.put("initialDate", initialTime==null
+            ? JSONObject.NULL : timeFormatter.format(initialTime));
+    json.put("finalDate", endTime==null
+            ? JSONObject.NULL : timeFormatter.format(endTime));
+    json.put("duration", time.toSeconds());
+    json.put("active", active);
+    return json;
   }
 
   @Override
