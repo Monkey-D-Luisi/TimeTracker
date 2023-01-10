@@ -79,6 +79,15 @@ public class Task extends Component {
     return null;
   }
 
+  @Override
+  public Component searchByName(String name){
+    if (name == this.getCompName()){
+      return this;
+    }
+    return null;
+  }
+  public void addActivity(boolean isProject, String name, Component father){}
+
   public JSONObject toJson(int depth) {
     // depth not used here
     JSONObject json = new JSONObject();

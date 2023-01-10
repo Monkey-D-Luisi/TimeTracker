@@ -1,5 +1,6 @@
 package core;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -50,6 +51,10 @@ public class Project extends Component {
     super(name, father);
     father.addComponent(this);
   }
+  public Project(String name, Project father, int id) {
+    super(name, father);
+    father.addComponent(this);
+  }
 
   public Project(String name) {
     super(name);
@@ -72,6 +77,15 @@ public class Project extends Component {
     this.compList.add(c);
   }
 
+  public void addActivity(boolean isProject, String name, Component father){
+    if (isProject){
+      Project newP = new Project(name, (Project) father);
+    }
+    else{
+      Task newT = new Task(name, (Project) father);
+    }
+  }
+
   public Component searchById(int id){
     Component found = null;
     if (id == this.getId()){
@@ -82,6 +96,24 @@ public class Project extends Component {
         int i = 0;
         while(i < this.compList.size() && found == null) {
           found = this.compList.get(i).searchById(id);
+          i++;
+        }
+      }
+    }
+    return found;
+  }
+
+@Override
+  public Component searchByName(String name) {
+  Component found = null;
+    if (name.equals(this.getCompName())){
+      found = this;
+    }
+    else{
+      if(this.compList != null) {
+        int i = 0;
+        while(i < this.compList.size() && found == null) {
+          found = this.compList.get(i).searchByName(name);
           i++;
         }
       }

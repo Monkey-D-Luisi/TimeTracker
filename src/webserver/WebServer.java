@@ -1,13 +1,13 @@
 package webserver;
 
 import core.Component;
+import core.Project;
 import core.Task;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URLDecoder;
 import java.util.StringTokenizer;
 
 // Based on
@@ -18,9 +18,9 @@ public class WebServer {
     private static final int PORT = 8080; // port to listen to
 
     private Component currentActivity;
-    private final Component root;
+    private final Project root;
 
-    public WebServer(Component root) {
+    public WebServer(Project root) {
         this.root = root;
         System.out.println(root);
         currentActivity = root;
@@ -40,6 +40,9 @@ public class WebServer {
 
     private Component findActivityById(int id) {
         return root.searchById(id);
+    }
+    private Component findProjectByName(String name){
+        return root.searchByName(name);
     }
 
     private class SocketThread extends Thread {
@@ -109,7 +112,7 @@ public class WebServer {
         }
 
 
-        private String makeBodyAnswer(String[] tokens) {
+        private String makeBodyAnswer(String[] tokens) throws UnsupportedEncodingException {
             String body = "";
             switch (tokens[0]) {
                 case "get_tree" : {
@@ -137,7 +140,19 @@ public class WebServer {
                     body = "{}";
                     break;
                 }
-                // TODO: add new task, project
+                case "add": {
+                    boolean isProject = Boolean.parseBoolean(tokens[1]);
+                    String name = tokens[2];
+                    String fatherName = URLDecoder.decode(tokens[3], "UTF-8");
+                    Component father = findProjectByName(fatherName);
+                    assert (father != null);
+                    father.addActivity(isProject, name, father);
+                    Component activity = findActivityById(0);
+                    assert (activity!=null);
+                    body = activity.toJson(2).toString();
+                    break;
+
+                }
                 // TODO: edit task, project properties
                 default:
                     assert false;

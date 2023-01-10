@@ -162,6 +162,8 @@ public abstract class Component {
   }
 
   public abstract Component searchById(int id);
+  public abstract Component searchByName(String name);
+  public abstract void addActivity(boolean isProject, String name, Component father);
 
   /**
    * Método del patrón visitor
@@ -180,5 +182,7 @@ public abstract class Component {
             ? JSONObject.NULL : timeFormatter.format(endDate));
     json.put("duration", time.toSeconds());
   }
-  //endregion
+
+
+    //endregion
 }

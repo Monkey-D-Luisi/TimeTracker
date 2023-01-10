@@ -14,7 +14,7 @@ public class MainWebServer {
     }
 
     public static void webServer() {
-        final Component root = makeTreeCourses();
+        final Project root = makeTreeCourses();
         // implement this method that returns the tree of
         // appendix A in the practicum handout
 
@@ -24,7 +24,7 @@ public class MainWebServer {
         new WebServer(root);
     }
 
-    private static Component makeTreeCourses() {
+    private static Project makeTreeCourses() {
         Project rootProject = new Project("Home");
         Project softwareDesignProject = new Project("Software Design", rootProject,
                 new ArrayList<String>(Arrays.asList("java", "flutter")));
