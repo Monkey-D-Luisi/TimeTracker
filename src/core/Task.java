@@ -58,7 +58,7 @@ public class Task extends Component {
     Interval currInterval = new Interval(LocalDateTime.now(), this);
     intervalList.add(currInterval);
     Clock.getInstance().addObserver(currInterval);
-
+    active = true;
     if (this.startDate == null) {
       this.setStartDate(LocalDateTime.now());
     }
@@ -69,6 +69,7 @@ public class Task extends Component {
     Interval interval = intervalList.get(intervalList.size() - 1);
     this.setEndDate(LocalDateTime.now());
     Clock.getInstance().deleteObserver(interval);;
+    active = false;
   }
 
   @Override
