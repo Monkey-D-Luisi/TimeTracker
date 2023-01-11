@@ -10,9 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
-/**
+/*
  * Clase abstracta que representa un elemento con final, duración y, quizás, fin y padre
- * La implementración podrá actualizar su porpio final y duración así como, recursivamente, los de sus predecesores
+ * La implementración podrá actualizar su porpio final y duración así como, recursivamente,
+ * los de sus predecesores
  * La implementación también puede pintar los datos
  */
 public abstract class Component {
@@ -162,10 +163,12 @@ public abstract class Component {
   }
 
   public abstract Component searchById(int id);
+
   public abstract Component searchByName(String name);
+
   public abstract void addActivity(boolean isProject, String name, Component father);
 
-  /**
+  /*
    * Método del patrón visitor
    * @param v el visitante que estamos aceptando
    */
@@ -176,13 +179,13 @@ public abstract class Component {
   protected void toJson(JSONObject json) {
     json.put("id", id);
     json.put("name", compName);
-    json.put("initialDate", startDate==null
+    json.put("initialDate", startDate == null
             ? JSONObject.NULL : timeFormatter.format(startDate));
-    json.put("finalDate", endDate==null
+    json.put("finalDate", endDate == null
             ? JSONObject.NULL : timeFormatter.format(endDate));
     json.put("duration", time.toSeconds());
   }
 
 
-    //endregion
+  //endregion
 }

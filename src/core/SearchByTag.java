@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
-/**
+/*
  * Clase que implementa el patrón visitor para visitar componentes y
    así generar archivos de log dado un marcador
  */

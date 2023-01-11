@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
-/**
+/*
  * Clase que implmenta el patrón visitor para visitar componentes y
    así generar archivos con datos en formato json o logs en html
  */
@@ -58,7 +58,7 @@ public class JsonVisitor implements Visitor {
     return tempObject;
   }
 
-  /**
+  /*
     * Llamamos al método createComponent(p) para inicializar el proyecto actual como JSONObject
     * Comprobamos que haya tareas asociadas al proyecto y en caso afirmativo las añadimos al JSON
     * Comprobamos si el proyecto actual es el primer proyecto y en ese caso miramos que el padre
@@ -93,7 +93,7 @@ public class JsonVisitor implements Visitor {
     proyectoAnterior = proyectoActual;
   }
 
-  /**
+  /*
     *   Inicializamos las tareas del proyecto como un nuevo JSONObject
     *   Inicializamos el array de intervalos de la tarea como un JSONArray
     *   Recorremos el array de intervalos y generamos un JSONObject para
@@ -146,7 +146,7 @@ public class JsonVisitor implements Visitor {
     return p;
   }
 
-  /**
+  /*
     Creamos el árbol de la siguiente manera:
     * Comprobamos si el objeto tiene padre y en caso de que sí tenga:
         * Comprobamos si el objeto es una Tarea:
@@ -181,7 +181,8 @@ public class JsonVisitor implements Visitor {
 
         for (Object item : jsonObject.getJSONArray("intervalos")) {
           JSONObject jsonObjectTemp = (JSONObject) item;
-          Interval interval = new Interval(getId(jsonObject, "id"), task, getDate(jsonObjectTemp, "startDate"),
+          Interval interval = new Interval(getId(jsonObject, "id"), task,
+                            getDate(jsonObjectTemp, "startDate"),
                             getDate(jsonObjectTemp, "endDate"),
                             getTime(jsonObjectTemp, "duration"));
           intervals.add(interval);
@@ -210,7 +211,8 @@ public class JsonVisitor implements Visitor {
       }
     } else {
       Project root = new Project("root");
-      Project project = new Project(getId(jsonObject, "id"), getName(jsonObject, "name"), getDate(jsonObject, "startDate"),
+      Project project = new Project(getId(jsonObject, "id"),
+                    getName(jsonObject, "name"), getDate(jsonObject, "startDate"),
                     getDate(jsonObject, "endDate"), getTags(jsonObject, "tagList"),
                     getTime(jsonObject, "duration"));
 
@@ -263,7 +265,7 @@ public class JsonVisitor implements Visitor {
     return tags;
   }
 
-  /**
+  /*
    * Transforma un valor String a Duration
    */
   private Duration getTime(JSONObject obj, String key) {

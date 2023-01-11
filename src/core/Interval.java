@@ -5,16 +5,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Observable;
 import java.util.Observer;
-
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
-/**
+/*
  * Clase que representa un intervalo dentro de una tarea y
-   implementa el patrón observer para ser actualizado utilizando la información de la instancia observada
+   implementa el patrón observer para ser actualizado
+   utilizando la información de la instancia observada
  */
 public class Interval implements Observer {
   //region -------------ATRIBUTOS-------------
@@ -89,6 +89,7 @@ public class Interval implements Observer {
   public Duration getTime() {
     return time;
   }
+
   public int getId() {
     return id;
   }
@@ -108,9 +109,9 @@ public class Interval implements Observer {
     JSONObject json = new JSONObject();
     json.put("class", "interval");
     json.put("id", id);
-    json.put("initialDate", initialTime==null
+    json.put("initialDate", initialTime == null
             ? JSONObject.NULL : timeFormatter.format(initialTime));
-    json.put("finalDate", endTime==null
+    json.put("finalDate", endTime == null
             ? JSONObject.NULL : timeFormatter.format(endTime));
     json.put("duration", time.toSeconds());
     json.put("active", active);

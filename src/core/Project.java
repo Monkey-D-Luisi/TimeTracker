@@ -5,11 +5,10 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
+/*
  * Implementación de Componente que reprsenta un proyecto
  */
 public class Project extends Component {
@@ -51,6 +50,7 @@ public class Project extends Component {
     super(name, father);
     father.addComponent(this);
   }
+
   public Project(String name, Project father, int id) {
     super(name, father);
     father.addComponent(this);
@@ -77,24 +77,22 @@ public class Project extends Component {
     this.compList.add(c);
   }
 
-  public void addActivity(boolean isProject, String name, Component father){
-    if (isProject){
+  public void addActivity(boolean isProject, String name, Component father) {
+    if (isProject) {
       Project newP = new Project(name, (Project) father);
-    }
-    else{
+    } else {
       Task newT = new Task(name, (Project) father);
     }
   }
 
-  public Component searchById(int id){
+  public Component searchById(int id) {
     Component found = null;
-    if (id == this.getId()){
+    if (id == this.getId()) {
       found = this;
-    }
-    else{
-      if(this.compList != null) {
+    } else {
+      if (this.compList != null) {
         int i = 0;
-        while(i < this.compList.size() && found == null) {
+        while (i < this.compList.size() && found == null) {
           found = this.compList.get(i).searchById(id);
           i++;
         }
@@ -103,16 +101,15 @@ public class Project extends Component {
     return found;
   }
 
-@Override
+  @Override
   public Component searchByName(String name) {
-  Component found = null;
-    if (name.equals(this.getCompName())){
+    Component found = null;
+    if (name.equals(this.getCompName())) {
       found = this;
-    }
-    else{
-      if(this.compList != null) {
+    } else {
+      if (this.compList != null) {
         int i = 0;
-        while(i < this.compList.size() && found == null) {
+        while (i < this.compList.size() && found == null) {
           found = this.compList.get(i).searchByName(name);
           i++;
         }
@@ -125,7 +122,7 @@ public class Project extends Component {
     JSONObject json = new JSONObject();
     json.put("class", "project");
     super.toJson(json);
-    if (depth>0) {
+    if (depth > 0) {
       JSONArray jsonActivities = new JSONArray();
       for (Component activity : compList) {
         jsonActivities.put(activity.toJson(depth - 1));
@@ -141,5 +138,5 @@ public class Project extends Component {
     v.visitProject(this);
   }
 
-   //endregion
+  //endregion
 }

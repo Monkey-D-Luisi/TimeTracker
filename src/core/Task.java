@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
+/*
  * Implementación de Componente que representa una tarea dentro de un proyecto
  */
 public class Task extends Component {
@@ -73,21 +73,22 @@ public class Task extends Component {
   }
 
   @Override
-  public Component searchById(int id){
-    if (id == this.getId()){
+  public Component searchById(int id) {
+    if (id == this.getId()) {
       return this;
     }
     return null;
   }
 
   @Override
-  public Component searchByName(String name){
-    if (name == this.getCompName()){
+  public Component searchByName(String name) {
+    if (name == this.getCompName()) {
       return this;
     }
     return null;
   }
-  public void addActivity(boolean isProject, String name, Component father){}
+
+  public void addActivity(boolean isProject, String name, Component father) {}
 
   public JSONObject toJson(int depth) {
     // depth not used here
@@ -95,7 +96,7 @@ public class Task extends Component {
     json.put("class", "task");
     super.toJson(json);
     json.put("active", active);
-    if (depth>0) {
+    if (depth > 0) {
       JSONArray jsonIntervals = new JSONArray();
       for (Interval interval : intervalList) {
         jsonIntervals.put(interval.toJson());

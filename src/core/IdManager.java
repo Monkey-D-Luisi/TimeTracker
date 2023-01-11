@@ -3,11 +3,15 @@ package core;
 public final class IdManager {
 
   public static void setComponentLastId(int componentLastId) {
-    if(ComponentLastId < componentLastId) ComponentLastId = componentLastId;
+    if (ComponentLastId < componentLastId) {
+      ComponentLastId = componentLastId;
+    }
   }
 
   public static void setIntervalLastId(int intervalLastId) {
-    if(IntervalLastId < intervalLastId) IntervalLastId = intervalLastId;
+    if (IntervalLastId < intervalLastId) {
+      IntervalLastId = intervalLastId;
+    }
   }
 
   protected static int ComponentLastId = -1;
@@ -20,14 +24,16 @@ public final class IdManager {
   }
 
   public static IdManager getInstance(int componentLastId, int intervalLastId) {
-    if(Instance == null)
+    if (Instance == null) {
       Instance = new IdManager(componentLastId, intervalLastId);
+    }
     return Instance;
   }
 
   public static IdManager getInstance() {
-    if(Instance == null)
+    if (Instance == null) {
       Instance = new IdManager(0, 0);
+    }
     return Instance;
   }
 
