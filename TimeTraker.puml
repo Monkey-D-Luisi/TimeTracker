@@ -67,36 +67,46 @@ class SearchByTag implements Visitor{
 }
 
 abstract class Component{
+- id: Int
 - compName : String
 - father : Project
 - startDate : LocalDateTime
 - endDate : LocalDateTime
 - tagList : ArrayList<String>
+- active: Boolean
 - time : Duration
 - timeFormatter : DateTimeFormatter
 - logger : Logger
 - marker : Marker
-+ Component (name : String, start : LocalDateTime, LocalDateTime : LocalDateTime, tags : ArrayList<String>)
-+ Component(compName : String, father : Project , tagList : ArrayList<String>)
-+ Component (compName : String, father : Project )
-+ Component (name : String, tags : ArrayList<String>)
++ Component(id: Int,name: String, father: Project, start: LocalDateTime, end: LocalDateTime, tags: ArrayList<String>, time: Duration)
++ Component(name: String, father: Project, start: LocalDateTime, end: LocalDateTime, tags: ArrayList<String>, time: Duration)
++ Component(id: Int, name: String, start: LocalDateTime, end: LocalDateTime, tags: ArrayList<String>, time: Duration)
++ Component(name: String, start: LocalDateTime, end: LocalDateTime, tags: ArrayList<String>, time: Duration)
++ Component(compName: String, father: Project, tagList: ArrayList<String>)
++ Component(compName: String, father: Project)
 + Component (name : String)
++ searchById(id: Int) : Component
++ searchByName(name: String) : Component
++ addActivity(isProject: boolean,name: String,father: Component)
 + update(endTime : LocalDateTime)
 + accept(v : Visitor)
 + printer()
++ toJson(depth: int) : JSONObject
++ toJson(json: JSONObject)
 }
 
 class Project extends Component{
 - compList : ArrayList<Component>
-+ Project (name : String, start : LocalDateTime, LocalDateTime : LocalDateTime, tags : ArrayList<String>)
++ Project (name : String, start : LocalDateTime, end : LocalDateTime, tags : ArrayList<String>)
 + Project(compName : String, father : Project , tagList : ArrayList<String>)
 + Project (compName : String, father : Project )
 + Project (name : String, tags : ArrayList<String>)
 + Project (name : String)
-+ setCompList(compList : ArrayList<Component>)
 + addComponent(c : Component)
++ searchById(id: Int ): Component
++ searchByName(name: String): Component
 + accept(v : Visitor)
-+ toString() : String
++ toJson(depth: int) : JSONObject
 }
 
 class Task extends Component{
@@ -106,8 +116,11 @@ class Task extends Component{
 + Task (name : String, tags : ArrayList<String>)
 + start()
 + stop()
++ searchById(id: Int) : Component
++ searchByName(name: String) : Component
++ addActivity(isProject: boolean,name: String,father: Component)
 + accept(v : Visitor)
-+ toString() : String
++ toJson(depth: int)
 }
 
 interface Visitor{
@@ -117,6 +130,16 @@ interface Visitor{
 
 class Observer{
 + update(o : Observable, arg : Object)
+}
+
+class IdManager extends Component{
+- ComponentLastId: Int
+- IntervalLastId: Int
+- Instance: IdManager
+- IdManager(componentLastId: Int, intervalLastId: Int)
+}
+
+class IdManager extends Interval{
 }
 
 Project *-right-> "0..*" Component
